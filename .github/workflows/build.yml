@@ -1,0 +1,56 @@
+name: Build site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'course/**'
+      - 'assets/**'
+      - 'starter-prompts.md'
+      - 'build.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-site
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build
+        run: python3 build.py | tee build.log
+
+      - name: Fail on a broken lesson
+        run: |
+          if grep -q 'ERROR' build.log; then
+            echo "::error::build.py reported an error - the site was not updated."
+            grep 'ERROR' build.log
+            exit 1
+          fi
+          if grep -q 'WARNING' build.log; then
+            echo "::warning::build.py reported a warning:"
+            grep 'WARNING' build.log
+          fi
+          rm -f build.log
+
+      - name: Commit the rebuilt site
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- docs; then
+            echo "No change to docs/ - nothing to publish."
+            exit 0
+          fi
+          git add docs
+          git commit -m "Rebuild site from ${GITHUB_SHA::7}"
+          git push
