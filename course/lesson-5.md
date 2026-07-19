@@ -79,42 +79,7 @@ A run is a few credits, so if the first version comes back mushy, sharpen the qu
 ]}
 ```
 
-**One page to take with you.** Every sentence this course had you say out loud to Claude Code fits on a single page. Here it is, so you are not digging back through the lessons to find the wording:
-
-```
-CONNECT CLAY (Lesson 1)
-Set up the Clay plugin by following the steps in
-https://github.com/clay-run/agent-plugins
-
-FIND COMPANIES (Lesson 2)
-Find me ______ companies in ______ with at least ______ employees.
-
-BUILD THE WORKFLOW (Lesson 3)
-Create a Clay workflow called "Company Research." Add a step that takes a
-company's website and uses Clay's AI web researcher (claygent) to return,
-in one or two words, the industry the company is in. Then run it on
-stripe.com and show me the result.
-
-RUN IT ON MORE COMPANIES (Lesson 4)
-Run Company Research on ______. Then run it again on ______. Show me both
-answers.
-
-CHECK ITS WORK (Lesson 4)
-For the ______ run, show me the reasoning and the sources behind that
-answer, including the actual page it visited.
-
-CHANGE THE QUESTION (Lesson 5)
-In my Company Research workflow, change the question the research step
-asks. Instead of the industry, ask ______. Then run it on ______ and show
-me the answer.
-
-WHEN SOMETHING ERRORS
-That returned an error, read it and tell me what happened.
-
-WHEN A SEARCH COMES BACK EMPTY
-That came back empty, describe these companies differently and search
-again.
-```
+**One page to take with you.** Every sentence this course had you say to Claude Code is on a single page, so you are not digging back through the lessons to find the wording. It comes with the course, along with a cheatsheet written for Claude Code itself to read.
 
 **What else this thing does.** You built the smallest version of this that is worth having: you press Run, it asks one question about one company. The same shape goes a good deal further, and this course does not teach any of it. I am naming it so you know the ceiling is not where you left it.
 
