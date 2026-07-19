@@ -95,6 +95,20 @@ blockquote {
   color: var(--ink);
 }
 
+/* Gift page: two downloads sitting side by side under the title. */
+.gift-download {
+  display: inline-block;
+  margin: 0 0.6rem 0.5rem 0;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--accent-dim);
+  border-radius: 8px;
+  background: var(--bg-inset);
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.gift-download:hover { border-color: var(--accent); background: var(--bg-raise); }
+
 /* The end-of-course survey, lesson 5 only. Sits under the report-a-problem link
    and is deliberately quieter than it: one is a bug report, one is a favour. */
 .feedback-survey { margin-top: 0.4rem; }

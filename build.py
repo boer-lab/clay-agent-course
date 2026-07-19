@@ -51,14 +51,20 @@ BANNER = ("Every Clay fact here was run live on a real Clay account on July 19, 
 FEEDBACK_URL = "https://forms.gle/tWV7KC5qhFK3eYji7"
 SURVEY_URL = "https://forms.gle/2iZnLKvbZJThkieP9"
 
-# The gift artifact. Source lives at repo/<GIFT_SOURCE>; the raw file is copied
-# into docs/ so the download link is a plain, ungated link.
-GIFT_SOURCE = "starter-prompts.md"
-GIFT_NAV_LABEL = "Starter prompts"
+# The gift page. Its prose lives in course/gift.md; the artifacts themselves are
+# raw files copied into docs/ so each download is a plain, ungated link. The page
+# introduces them rather than inlining them - an earlier version pasted the whole
+# artifact above its own download button, which made the page pointless.
+GIFT_PAGE = "gift.md"
+GIFT_NAV_LABEL = "Take with you"
 GIFT_BADGE = "The gift"
-GIFT_BLURB = ("The exact plain-English asks that build, run, and reuse the workflow — "
-              "copy them straight into Claude Code.")
+GIFT_BLURB = ("A cheatsheet your coding agent can read, and the plain-English asks "
+              "that build the workflow.")
 GIFT_LICENSE = "License: CC BY 4.0 — use it, adapt it, credit Boer Chen."
+GIFT_FILES = [
+    ("clay-agent-cheatsheet.md", "The cheatsheet, for your agent"),
+    ("starter-prompts.md", "The starter prompts, for you"),
+]
 
 # ---------------------------------------------------------------- inline markdown
 
@@ -338,7 +344,7 @@ def top_nav(current=""):
         cur = ' aria-current="page"' if current == str(n) else ""
         pills.append(f'<a class="{cls}" data-lesson="{n}" href="lesson-{n}.html" '
                      f'title="Lesson {n}"{cur}>{n}</a>')
-    if (REPO / GIFT_SOURCE).is_file():
+    if (COURSE / GIFT_PAGE).is_file():
         cls = "nav-pill nav-pill-text" + (" pill-current" if current == "gift" else "")
         cur = ' aria-current="page"' if current == "gift" else ""
         pills.append(f'<a class="{cls}" href="gift.html"{cur}>{html.escape(GIFT_NAV_LABEL)}</a>')
@@ -375,7 +381,7 @@ def lesson_nav(n):
               if n > 0 else '<a class="nav-prev" href="index.html">&larr; Course home</a>')
     if n < N_LESSONS - 1:
         next_a = f'<a class="nav-next" href="lesson-{n + 1}.html">Lesson {n + 1} &rarr;</a>'
-    elif (REPO / GIFT_SOURCE).is_file():
+    elif (COURSE / GIFT_PAGE).is_file():
         next_a = f'<a class="nav-next" href="gift.html">{html.escape(GIFT_NAV_LABEL)} &rarr;</a>'
     else:
         next_a = '<a class="nav-next" href="index.html">Course home &rarr;</a>'
@@ -431,24 +437,33 @@ def build_lesson(n, md, titles, times):
 
 
 def build_gift():
-    src = REPO / GIFT_SOURCE
+    src = COURSE / GIFT_PAGE
     if not src.is_file():
-        print(f"  NOTE: repo/{GIFT_SOURCE} missing — gift page skipped.")
+        print(f"  NOTE: course/{GIFT_PAGE} missing - gift page skipped.")
         return
     md = src.read_text(encoding="utf-8")
-    shutil.copyfile(src, SITE / GIFT_SOURCE)
     title_m = re.search(r"^#\s+(.+)$", md, re.MULTILINE)
     title = title_m.group(1).strip() if title_m else GIFT_NAV_LABEL
     body_md = re.sub(r"^#\s+.+\n+", "", md, count=1)
     content = md_to_html(body_md)
-    download = (f'<p class="download"><a href="{GIFT_SOURCE}" download>'
-                f"Download the raw markdown ({GIFT_SOURCE})</a><br>"
-                f'<small class="license-line">{html.escape(GIFT_LICENSE)}</small></p>')
+
+    links = []
+    for fname, label in GIFT_FILES:
+        f = REPO / fname
+        if not f.is_file():
+            print(f"  WARNING: gift artifact missing: {fname}")
+            continue
+        shutil.copyfile(f, SITE / fname)
+        links.append(f'<a class="gift-download" href="{fname}" download>{html.escape(label)}</a>')
+    downloads = (f'<p class="download">{" ".join(links)}<br>'
+                 f'<small class="license-line">{html.escape(GIFT_LICENSE)}</small></p>'
+                 if links else "")
+
     body = f"""<main class="lesson">
 <header class="lesson-header">
 <p class="lesson-badges"><span class="badge badge-num">{html.escape(GIFT_BADGE)}</span></p>
 <h1>{inline(title)}</h1>
-{download}
+{downloads}
 </header>
 <article class="lesson-body">
 {content}
@@ -456,8 +471,8 @@ def build_gift():
 {footer_html()}
 </main>"""
     (SITE / "gift.html").write_text(
-        page(f"{title} · {SITE_TITLE}", body, nav=top_nav("gift")), encoding="utf-8")
-    print(f"  built docs/gift.html (+ raw docs/{GIFT_SOURCE})")
+        page(f"{title} \u00b7 {SITE_TITLE}", body, nav=top_nav("gift")), encoding="utf-8")
+    print(f"  built docs/gift.html (+ {len(links)} artifact(s))")
 
 
 def build_colophon():
@@ -506,7 +521,7 @@ def build_index(titles, times):
     total = (f'<p class="total-time">Six lessons, about {mins} minutes total.</p>'
              if mins else "")
     gift_html = ""
-    if (REPO / GIFT_SOURCE).is_file():
+    if (COURSE / GIFT_PAGE).is_file():
         gift_html = (f'<section class="landing-extras"><p>'
                      f'<a class="sop-link" href="gift.html">{html.escape(GIFT_NAV_LABEL)}</a> — '
                      f"{html.escape(GIFT_BLURB)}</p></section>")
