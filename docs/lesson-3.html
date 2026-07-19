@@ -14,18 +14,24 @@
 <h1>Lesson 3 — Build your first workflow (and watch it run)</h1>
 </header>
 <article class="lesson-body">
-<h2>Why this matters</h2>
+<h2>What this gets you</h2>
 <p>By now you can ask Claude Code to find companies. Finding them is nice. The real question a beginner has is quieter and a little scary: <em>can I actually build something in Clay, or am I just typing and hoping?</em></p>
 <p>You can build something. In this lesson you build a small Clay workflow — a saved set of steps that takes a company and hands back a real answer about it — and you run it. When you finish, there is a thing in your Clay account that you made, that works, that you can run again tomorrow. That is the moment the fear goes away.</p>
-<p>One honest word first. The tool you are using — Clay's Agent Plugin — is new and in beta. Nothing in this lesson needs a paid plan.</p>
-<h2>See it</h2>
+<p>One honest word first. The tool you are using — Clay's Agent Plugin — is new and in beta.</p>
+<h2>The whole build, start to finish</h2>
 <p>A workflow is just a set of steps with a start and an end. Yours will have two: a <strong>start</strong> (you hand it a company website) and a <strong>research step</strong> (it looks the company up and tells you what it does).</p>
 <p>You do not build this by clicking around Clay. You ask Claude Code, in plain English, and it builds it for you. Here is the whole thing, start to finish, exactly as it ran.</p>
 <p>You:</p>
 <blockquote><p>Create a Clay workflow called "Company Research." Add a step that takes a company's website and uses Clay's AI web researcher to tell me, in one or two words, what industry the company is in. Then run it on geico.com.</p></blockquote>
 <p>Claude Code creates the workflow, adds the step, and runs it. A few seconds later:</p>
 <pre><code>geico.com  →  Insurance   (confidence: very high)</code></pre>
-<p>That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run takes well under a minute — some come back in under ten seconds, some take half a minute — and costs a few credits.</p>
+<p>That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run usually takes fifteen to thirty seconds and costs a few credits.</p>
+<p>You never typed that question, but a question is what ran, and this is it, word for word:</p>
+<pre><code>Visit {{domain}}. In one or two words, what industry is this company in?
+Return only the industry name.</code></pre>
+<p>Two things to notice. It is an ordinary English sentence, not code — you could have written it yourself. And <code>{{domain}}</code> is a slot: the company website you hand the workflow drops in there on every run, which is why the same step works on geico.com today and on any other company tomorrow, without you changing anything.</p>
+<p>You can see this on your own workflow. Ask:</p>
+<blockquote><p>Show me the exact question that research step is running.</p></blockquote>
 <p>Here is what it looks like in your Clay account. The workflow is a little map — a start box connected to your research step:</p>
 <figure class="shot"><a href="assets/workflow-canvas.png"><img src="assets/workflow-canvas.png" loading="lazy" alt="Your workflow in Clay: a start box wired to your research step, with a Run button."></a><figcaption>Your workflow in Clay: a start box wired to your research step, with a Run button.</figcaption></figure>
 <p>And every time you run it, Clay logs the run so you can see what happened:</p>
@@ -33,27 +39,26 @@
 <h2>Try it</h2>
 <p>You will build the exact same thing. Nothing here changes anything outside this one workflow, and nothing costs more than a few credits.</p>
 <p>First, what "done" looks like: a workflow named Company Research exists in your Clay account, and running it on a company website returns an industry. That is the whole target.</p>
-<p>One thing you may see and should not read as failure: sometimes the answer comes back with no pages attached to it. That usually means the researcher's search turned up nothing and it answered from what it already knew instead of from a site. The answer may well be right. It is just unchecked, which is a different thing, and Lesson 4 is where you learn to tell those apart.</p>
+<p>One thing you may see and should not read as failure: sometimes the answer comes back with no pages attached to it. That usually means the researcher's search turned up nothing and it answered from what it already knew instead of from a site. The answer may well be right. Nothing behind it has been checked, though, and Lesson 4 is where you learn to tell those two apart.</p>
 <p>Now you:</p>
 <ol>
 <li>Open Claude Code and make sure Clay is connected (Lesson 1). </li>
-<li>Copy this and send it, word for word:</li>
-</ol>
-<p>&gt; Create a Clay workflow called "Company Research." Add a step that takes a company's website and uses Clay's AI web researcher (claygent) to return, in one or two words, the industry the company is in. Then run it on <strong>stripe.com</strong> and show me the result.</p>
-<ol>
+<li>Copy this and send it, word for word:
+<blockquote><p>Create a Clay workflow called "Company Research." Add a step that takes a company's website and uses Clay's AI web researcher (claygent) to return, in one or two words, the industry the company is in. Then run it on <strong>stripe.com</strong> and show me the result.</p></blockquote></li>
 <li>Watch what Claude Code does. It will tell you it created the workflow, added the step, and started a run. Give it up to half a minute, then it shows you the answer. For stripe.com the answer that comes back most often is "Financial Services." The exact wording moves around from run to run, so do not measure yourself against that string — any short label that means finance ("Fintech" is a common one) means you built it right.</li>
 <li>Open the workflow in Clay. Claude Code gives you a link when it creates it — click it. You will see the little map from above, and a Runs tab with your run in it.</li>
 </ol>
 <p>If it stalls or errors, tell Claude Code "that returned an error, read it and tell me what happened" — the error almost always says exactly what to fix, and a retry costs a credit or two rather than nothing.</p>
 <h2>Check yourself</h2>
-<p>Three quick ones. A wrong pick just explains the idea.</p>
+<p>Three quick ones. Nothing here is scored.</p>
 <div class="quiz-section" id="quiz-root" data-lesson="3"></div>
 <h2>Fine print</h2>
 <details>
 <summary>The exact steps, dates, and limits</summary>
 <ul>
-<li>Built and run live on a real Clay account on July 19, 2026. The research step uses Clay's "Claygent (AI Web Researcher)" action; the run on geico.com returned "Insurance" (confidence very high) for about 5 credits. Runs across this course have come back in as little as seven seconds and taken as long as thirty-four.</li>
+<li>Built and run live on a real Clay account on July 19, 2026. The research step uses Clay's "Claygent (AI Web Researcher)" action; the run on geico.com returned "Insurance" (confidence very high) for about 5 credits. Lesson 4's fine print has the full timing spread.</li>
 <li>The Agent Plugin is in open beta. Clay's documentation states there are no current plans to support building spreadsheet-style tables through the developer platform, and reading existing Clay tables this way is limited to Enterprise plans (Clay docs: clay-api-cli, checked Jul 18, 2026). A workflow does not need a table.</li>
+<li>The question a run actually executed is readable after the fact, off the finished run itself. If the question saved on the step and the question the run executed ever disagree, the run is the ground truth — that is what produced the answer you are looking at.</li>
 <li>Claude Code builds the workflow through Clay's plugin — you never write code or click through Clay's builder yourself. If you're curious what it ran under the hood, ask it "show me what you built" and it will walk you through the steps.</li>
 </ul>
 </details>

@@ -2,7 +2,7 @@
 
 **Time:** 4 min
 
-## Why this matters
+## What this gets you
 
 The name stops people. "Claude Code" sounds like something built for engineers, and plenty of people who would get real use out of it never open it once for that reason alone.
 
@@ -14,7 +14,7 @@ Before you spend six lessons on this, one thing you should hear from me and not 
 
 The main thing you cannot do is build a spreadsheet-style table. Clay has not opened table building to this route. That is on Clay's side, so no rephrasing will get you past it. Everything you build in this course works without a table.
 
-## See it
+## The shape of it
 
 You do not learn commands to use this. You type a sentence and it answers. Then you type another one.
 

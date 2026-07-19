@@ -217,7 +217,20 @@ def md_to_html(md):
             flush_quote()
 
         if not line.strip():
-            flush_all()
+            flush_para(); flush_quote()
+            # A blank line between two list items is normal markdown and must not
+            # end the list. Closing it here restarted <ol> numbering at 1 on every
+            # step. Only close when the next non-blank line is not another item of
+            # the same kind.
+            if list_stack:
+                k = i + 1
+                while k < len(lines) and not lines[k].strip():
+                    k += 1
+                nxt = lines[k] if k < len(lines) else ""
+                same_kind = ((list_stack == "ul" and re.match(r"^\s*[-*]\s+", nxt))
+                             or (list_stack == "ol" and re.match(r"^\s*\d+\.\s+", nxt)))
+                if not same_kind:
+                    flush_list()
             i += 1
             continue
 
@@ -264,12 +277,32 @@ def md_to_html(md):
                 out.append(f"<{kind}>")
                 list_stack = kind
             item = (m or n).group(1)
-            while (i + 1 < len(lines) and lines[i + 1].strip()
-                   and re.match(r"^\s{2,}\S", lines[i + 1])
-                   and not re.match(r"^\s*([-*]|\d+\.)\s+", lines[i + 1])):
-                i += 1
-                item += " " + lines[i].strip()
-            out.append(f"<li>{inline(item)}</li>")
+            # Absorb everything indented under this item, blank lines included, and
+            # render it as markdown inside the <li>. Markdown lets a list item carry
+            # whole paragraphs and quotes; the old parser folded them into one flat
+            # line, which left indented blockquotes showing a literal ">".
+            cont = []
+            j = i + 1
+            while j < len(lines):
+                nxt = lines[j]
+                if not nxt.strip():
+                    cont.append("")
+                    j += 1
+                    continue
+                if re.match(r"^\s{2,}\S", nxt):
+                    cont.append(nxt)
+                    j += 1
+                    continue
+                break
+            while cont and not cont[-1].strip():
+                cont.pop()
+            body = inline(item)
+            if cont:
+                pad = min(len(c) - len(c.lstrip()) for c in cont if c.strip())
+                body += "\n" + md_to_html(
+                    "\n".join(c[pad:] if c.strip() else "" for c in cont))
+                i = j - 1
+            out.append(f"<li>{body}</li>")
             i += 1
             continue
         flush_list()

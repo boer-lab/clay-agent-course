@@ -2,15 +2,15 @@
 
 **Time:** 6 min
 
-## Why this matters
+## What this gets you
 
 By now you can ask Claude Code to find companies. Finding them is nice. The real question a beginner has is quieter and a little scary: *can I actually build something in Clay, or am I just typing and hoping?*
 
 You can build something. In this lesson you build a small Clay workflow — a saved set of steps that takes a company and hands back a real answer about it — and you run it. When you finish, there is a thing in your Clay account that you made, that works, that you can run again tomorrow. That is the moment the fear goes away.
 
-One honest word first. The tool you are using — Clay's Agent Plugin — is new and in beta. Nothing in this lesson needs a paid plan.
+One honest word first. The tool you are using — Clay's Agent Plugin — is new and in beta.
 
-## See it
+## The whole build, start to finish
 
 A workflow is just a set of steps with a start and an end. Yours will have two: a **start** (you hand it a company website) and a **research step** (it looks the company up and tells you what it does).
 
@@ -26,7 +26,20 @@ Claude Code creates the workflow, adds the step, and runs it. A few seconds late
 geico.com  →  Insurance   (confidence: very high)
 ```
 
-That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run takes well under a minute — some come back in under ten seconds, some take half a minute — and costs a few credits.
+That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run usually takes fifteen to thirty seconds and costs a few credits.
+
+You never typed that question, but a question is what ran, and this is it, word for word:
+
+```
+Visit {{domain}}. In one or two words, what industry is this company in?
+Return only the industry name.
+```
+
+Two things to notice. It is an ordinary English sentence, not code — you could have written it yourself. And `{{domain}}` is a slot: the company website you hand the workflow drops in there on every run, which is why the same step works on geico.com today and on any other company tomorrow, without you changing anything.
+
+You can see this on your own workflow. Ask:
+
+> Show me the exact question that research step is running.
 
 Here is what it looks like in your Clay account. The workflow is a little map — a start box connected to your research step:
 
@@ -42,7 +55,7 @@ You will build the exact same thing. Nothing here changes anything outside this 
 
 First, what "done" looks like: a workflow named Company Research exists in your Clay account, and running it on a company website returns an industry. That is the whole target.
 
-One thing you may see and should not read as failure: sometimes the answer comes back with no pages attached to it. That usually means the researcher's search turned up nothing and it answered from what it already knew instead of from a site. The answer may well be right. It is just unchecked, which is a different thing, and Lesson 4 is where you learn to tell those apart.
+One thing you may see and should not read as failure: sometimes the answer comes back with no pages attached to it. That usually means the researcher's search turned up nothing and it answered from what it already knew instead of from a site. The answer may well be right. Nothing behind it has been checked, though, and Lesson 4 is where you learn to tell those two apart.
 
 Now you:
 
@@ -58,7 +71,7 @@ If it stalls or errors, tell Claude Code "that returned an error, read it and te
 
 ## Check yourself
 
-Three quick ones. A wrong pick just explains the idea.
+Three quick ones. Nothing here is scored.
 
 ```quiz-json
 {"lesson": 3, "items": [
@@ -85,8 +98,9 @@ Three quick ones. A wrong pick just explains the idea.
 <details>
 <summary>The exact steps, dates, and limits</summary>
 
-- Built and run live on a real Clay account on July 19, 2026. The research step uses Clay's "Claygent (AI Web Researcher)" action; the run on geico.com returned "Insurance" (confidence very high) for about 5 credits. Runs across this course have come back in as little as seven seconds and taken as long as thirty-four.
+- Built and run live on a real Clay account on July 19, 2026. The research step uses Clay's "Claygent (AI Web Researcher)" action; the run on geico.com returned "Insurance" (confidence very high) for about 5 credits. Lesson 4's fine print has the full timing spread.
 - The Agent Plugin is in open beta. Clay's documentation states there are no current plans to support building spreadsheet-style tables through the developer platform, and reading existing Clay tables this way is limited to Enterprise plans (Clay docs: clay-api-cli, checked Jul 18, 2026). A workflow does not need a table.
+- The question a run actually executed is readable after the fact, off the finished run itself. If the question saved on the step and the question the run executed ever disagree, the run is the ground truth — that is what produced the answer you are looking at.
 - Claude Code builds the workflow through Clay's plugin — you never write code or click through Clay's builder yourself. If you're curious what it ran under the hood, ask it "show me what you built" and it will walk you through the steps.
 
 </details>

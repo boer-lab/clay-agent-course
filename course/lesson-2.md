@@ -2,7 +2,7 @@
 
 **Time:** 4 min
 
-## Why this matters
+## What this gets you
 
 Say you want a list of companies in one particular field. Places you might apply to, or the competitors of a company you are curious about. Doing that by hand means a search box, a pile of open tabs, and copying names and websites into a document one at a time, and a while later you are still not done.
 
@@ -10,7 +10,7 @@ Here you describe the kind of company you are after, in ordinary English, and a 
 
 You do not need to know how Clay's search works, and you will not type anything that looks like code.
 
-## See it
+## One sentence, twenty companies
 
 Say you want large insurance companies in the United States. The ask:
 
@@ -43,7 +43,7 @@ You are going to do the same thing, with a kind of company you pick. You are don
 
 A search only reads, so nothing you type here changes anything in your Clay account. It does draw on a monthly allowance of search results, though, and that allowance is easier to use up than you would expect. Aim once rather than firing off ten rough attempts.
 
-If what comes back is an error that mentions your plan or an upgrade, that is the month's hundred results used up, and nothing is broken. Running out announces itself as an error rather than a quiet empty list, the count resets next month, and you can do the rest of the course without it by using geico.com and zurichna.com wherever a later lesson asks you for a company.
+If what comes back is an error naming how many results you have used and a date it resets, that is the monthly allowance gone, and nothing is broken. Running out announces itself as an error rather than a quiet empty list, the count resets next month, and you can do the rest of the course without it by using geico.com and zurichna.com wherever a later lesson asks you for a company.
 
 Fill in the blanks:
 

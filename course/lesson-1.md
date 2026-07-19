@@ -2,13 +2,13 @@
 
 **Time:** 4 min
 
-## Why this matters
+## What this gets you
 
 Search for how to use Clay with AI and you get several different answers, all of them correct. That is where most people lose an hour, and it has nothing to do with being technical. There are three separate doors into Clay. They have similar names, Clay's own help pages cover all three, and nobody tells you which one you are standing in.
 
 By the end of this lesson you are through the door this course uses, and you have checked that for yourself instead of taking the tool's word for it.
 
-## See it
+## The three doors into Clay
 
 The three doors, shortest version:
 
