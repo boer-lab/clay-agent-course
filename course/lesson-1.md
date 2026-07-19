@@ -1,6 +1,6 @@
 # Lesson 1 — Connect Clay
 
-**Time:** 4 min
+**Time:** 5 min
 
 ## What this gets you
 

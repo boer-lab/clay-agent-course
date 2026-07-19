@@ -1,6 +1,6 @@
 # Lesson 2 — Find real companies
 
-**Time:** 4 min
+**Time:** 5 min
 
 ## What this gets you
 

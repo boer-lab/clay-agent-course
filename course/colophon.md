@@ -48,8 +48,7 @@ so changing the question in one place can quietly change it somewhere else. Noth
 that happens, which is what makes it worth a warning.
 
 Several published specifics did not reproduce either: the industry the lessons predicted for one
-example company, how long a run takes, and the list of companies a search hands back. The
-credit-balance point above came out of the same test. All of it was corrected before publication.
+example company, how long a run takes, and the list of companies a search hands back. All of it was corrected before publication.
 
 One thing the test could not check: every tester already had the plugin installed and signed in,
 so nobody exercised that step. Installing and signing in is the riskiest part of this course for

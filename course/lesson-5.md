@@ -1,6 +1,6 @@
 # Lesson 5 — Make it yours
 
-**Time:** 5 min
+**Time:** 9 min
 
 ## What this gets you
 
@@ -23,7 +23,7 @@ The same sentence you met in Lesson 3, with `{{domain}}` still standing in for w
 
 Now swap the question. You do not edit anything by hand. You say what you want:
 
-> In my Company Research workflow, change the question the research step asks. Instead of the industry, ask whether the company sells to other businesses or to consumers. Then run it on aflac.com and show me the answer.
+> In my Company Research workflow, change the question the research step asks. Instead of the industry, ask whether the company sells mainly to other businesses, to consumers, or to both. Then run it on aflac.com and show me the answer.
 
 It comes back in fifteen to thirty seconds:
 
@@ -35,7 +35,7 @@ Confidence   high
 Sources      aflac.com, then a web search for Aflac's business model
 ```
 
-Notice what it did not do. Aflac genuinely sells both ways, and the answer says so instead of picking a side to sound decisive. Notice too what the confidence rating is worth: run the same question again and that rating moves around. It is the researcher grading its own work, which is exactly why Lesson 4 had you go look at the page instead. It found the "Business Owners" link on Aflac's own site, and you can go open that yourself.
+Aflac genuinely sells both ways, and "both" is what came back. Notice what the confidence rating is worth, though: run the same question again and that rating moves around. It is the researcher grading its own work, which is exactly why Lesson 4 had you go look at the page instead. It found the "Business Owners" link on Aflac's own site, and you can go open that yourself.
 
 Anything a person could work out by reading a company's public pages is fair game: what they sell, who they sell to, whether they mention a particular product, which markets they list. If the answer is not published anywhere, no wording will get it out of there.
 

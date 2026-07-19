@@ -26,7 +26,7 @@ Claude Code creates the workflow, adds the step, and runs it. A few seconds late
 geico.com  →  Insurance   (confidence: very high)
 ```
 
-That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run usually takes fifteen to thirty seconds and costs a few credits.
+That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run usually takes fifteen to thirty seconds and costs a few credits. Credits are the units Clay charges in: every piece of work it does for you spends some, your account comes with an allowance, and one run of this workflow spends about five of them.
 
 You never typed that question, but a question is what ran, and this is it, word for word:
 

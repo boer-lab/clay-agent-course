@@ -40,6 +40,12 @@ SITE_TITLE = "Using Clay in Claude Code"
 TAGLINE = ("You do not need to know how to code. "
            "In six short lessons you build something real in Clay by asking for it in plain English.")
 BYLINE = "Boer Chen"
+PREREQS = [
+    ("What you need", "A Mac or a Linux machine. Windows is not supported while Clay's plugin is in open beta."),
+    ("", "A Claude account, for Claude Code."),
+    ("", "A Clay account. Clay's own documentation says this way of working is available on all their plans, including free ones."),
+]
+
 BANNER = ("Every Clay fact here was run live on a real Clay account on July 19, 2026. "
           "Clay ships weekly — check the current docs before relying on any limit.")
 
@@ -87,6 +93,9 @@ def inline(text):
     text = re.sub(r"\*\*([^*]+(?:\*[^*]+)*)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(r"(?<![\w*])\*([^*\s][^*]*)\*(?![\w*])", r"<em>\1</em>", text)
     text = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r'<a href="\2">\1</a>', text)
+    # Markdown backslash escapes. Without this, lesson 2's fill-in-the-blank
+    # prompt rendered as literal \_\_\_\_ on the one line a reader is meant to copy.
+    text = re.sub(r"\\([_*\[\]()#+\-.!`\\])", r"\1", text)
     return _restore_codes(text, codes)
 
 # ---------------------------------------------------------------- comment handling
@@ -551,13 +560,19 @@ def build_index(titles, times):
         m = re.match(r"(\d+)", t or "")
         if m:
             mins += int(m.group(1))
-    total = (f'<p class="total-time">Six lessons, about {mins} minutes total.</p>'
+    total = (f'<p class="total-time">Six lessons, about {mins} minutes of reading. '
+             f'Setting up Claude Code and Clay for the first time is on top of that, '
+             f'and I have not timed it — give your first sitting an evening.</p>'
              if mins else "")
     gift_html = ""
     if (COURSE / GIFT_PAGE).is_file():
         gift_html = (f'<section class="landing-extras"><p>'
                      f'<a class="sop-link" href="gift.html">{html.escape(GIFT_NAV_LABEL)}</a> — '
                      f"{html.escape(GIFT_BLURB)}</p></section>")
+    prereq_items = "".join(
+        f"<li>{html.escape(t)}</li>" for _, t in PREREQS)
+    prereqs = (f'<section class="prereqs"><h2>{html.escape(PREREQS[0][0])}</h2>'
+               f"<ul>{prereq_items}</ul></section>")
     body = f"""<main class="landing">
 <header class="landing-header">
 <h1>{html.escape(SITE_TITLE)}</h1>
@@ -565,6 +580,7 @@ def build_index(titles, times):
 <p class="byline">By {html.escape(BYLINE)}</p>
 <p class="banner">{html.escape(BANNER)}</p>
 {total}
+{prereqs}
 <div class="course-progress" id="course-progress" hidden>
 <span class="course-progress-label"></span>
 <span class="course-progress-track"><span class="course-progress-fill"></span></span>

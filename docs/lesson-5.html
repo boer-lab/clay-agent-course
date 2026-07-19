@@ -10,7 +10,7 @@
 <nav class="top-nav"><div class="top-nav-inner"><a class="brand" href="index.html">Using Clay in Claude Code</a><div class="nav-pills" aria-label="Lessons"><a class="nav-pill" data-lesson="0" href="lesson-0.html" title="Lesson 0">0</a><a class="nav-pill" data-lesson="1" href="lesson-1.html" title="Lesson 1">1</a><a class="nav-pill" data-lesson="2" href="lesson-2.html" title="Lesson 2">2</a><a class="nav-pill" data-lesson="3" href="lesson-3.html" title="Lesson 3">3</a><a class="nav-pill" data-lesson="4" href="lesson-4.html" title="Lesson 4">4</a><a class="nav-pill pill-current" data-lesson="5" href="lesson-5.html" title="Lesson 5" aria-current="page">5</a><a class="nav-pill nav-pill-text" href="gift.html">Take with you</a></div></div></nav>
 <main class="lesson">
 <header class="lesson-header">
-<p class="lesson-badges"><span class="badge badge-num">Lesson 5</span> <span class="badge badge-time">5 min</span></p>
+<p class="lesson-badges"><span class="badge badge-num">Lesson 5</span> <span class="badge badge-time">9 min</span></p>
 <h1>Lesson 5 — Make it yours</h1>
 </header>
 <article class="lesson-body">
@@ -24,14 +24,14 @@
 Return only the industry name.</code></pre>
 <p>The same sentence you met in Lesson 3, with <code>{{domain}}</code> still standing in for whichever website you hand it. When you ran it on stripe.com, that is what did the work.</p>
 <p>Now swap the question. You do not edit anything by hand. You say what you want:</p>
-<blockquote><p>In my Company Research workflow, change the question the research step asks. Instead of the industry, ask whether the company sells to other businesses or to consumers. Then run it on aflac.com and show me the answer.</p></blockquote>
+<blockquote><p>In my Company Research workflow, change the question the research step asks. Instead of the industry, ask whether the company sells mainly to other businesses, to consumers, or to both. Then run it on aflac.com and show me the answer.</p></blockquote>
 <p>It comes back in fifteen to thirty seconds:</p>
 <pre><code>aflac.com
 
 Answer       Both
 Confidence   high
 Sources      aflac.com, then a web search for Aflac&#x27;s business model</code></pre>
-<p>Notice what it did not do. Aflac genuinely sells both ways, and the answer says so instead of picking a side to sound decisive. Notice too what the confidence rating is worth: run the same question again and that rating moves around. It is the researcher grading its own work, which is exactly why Lesson 4 had you go look at the page instead. It found the "Business Owners" link on Aflac's own site, and you can go open that yourself.</p>
+<p>Aflac genuinely sells both ways, and "both" is what came back. Notice what the confidence rating is worth, though: run the same question again and that rating moves around. It is the researcher grading its own work, which is exactly why Lesson 4 had you go look at the page instead. It found the "Business Owners" link on Aflac's own site, and you can go open that yourself.</p>
 <p>Anything a person could work out by reading a company's public pages is fair game: what they sell, who they sell to, whether they mention a particular product, which markets they list. If the answer is not published anywhere, no wording will get it out of there.</p>
 <p>Two limits are worth knowing before you go off on your own. This path does not build spreadsheet-style tables, and Clay has said plainly that it is not planning to. And the Agent Plugin is in open beta, with workflows the newest part of it, so small things will change under you.</p>
 <p>The workflow does one job well: asking the same public-web question about company after company, and keeping the sources for each answer. That is enough for real work. Ten companies on a list, and you need to know which of them sell to hospitals. You hand the list over and it runs them one after another. Feeding a list in automatically is a next step, and this course does not cover it.</p>

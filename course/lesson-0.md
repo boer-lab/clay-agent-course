@@ -1,6 +1,6 @@
 # Lesson 0 — Before You Begin
 
-**Time:** 4 min
+**Time:** 5 min
 
 ## What this gets you
 
@@ -44,11 +44,11 @@ Claude Code opens inside a terminal window, which is the plain window your compu
 
 By the end of this you will have Claude Code open on your machine and one answer on the screen. No Clay yet.
 
-The four minutes on this lesson is reading time. The install takes however long it takes on your connection, and you only do it once.
+The five minutes on this lesson is reading time. The install takes however long it takes on your connection, and you only do it once.
 
 Claude Code is Anthropic's own app. Anthropic's Claude Code documentation is where the install steps, the systems it supports, and the Claude plans that include access are kept current, so start there rather than from a copy of those details written down here months ago.
 
-1. Open a terminal. On a Mac, press `Cmd + Space`, type `Terminal`, and press Enter. On Linux, search your applications for Terminal. A window opens with a blinking cursor.
+1. Open a terminal. On a Mac, press `Cmd + Space`, type `Terminal`, and press Enter. On Linux, search your applications for Terminal. A window opens with a blinking cursor. If you are on Windows, stop here: Clay's plugin does not support Windows while it is in open beta, so the rest of this course will not run for you yet.
 
 2. Install Claude Code by following Anthropic's instructions for your system. Text will scroll past while it works, and the installer tells you when it has finished. If it stops with an error instead, copy the error text and search it — nothing has broken, and running the install a second time costs you nothing but a minute.
 
