@@ -32,7 +32,7 @@ At some point it has to know who you are, so it will walk you through connecting
 
 One flat rule for the whole course, and it holds for every lesson after this one: you never type a password or an API key, which is a long string of characters that works like a password for a tool, into the chat. If anything ever asks you to, stop there.
 
-Once it says it is done, you ask it which Clay account it is in. Here is what came back on mine, with the id numbers blanked out. It is just a couple of lines of detail:
+Once it says it is done, you ask it which Clay account it is in. Here is the shape of what comes back, with your own details in place of the placeholders. It is just a couple of lines of detail:
 
 ```
 {
@@ -109,7 +109,7 @@ Nothing here is graded. Pick one, read what comes back, keep going.
 - The Clay Agent Plugin is in open beta, and it runs on Mac and Linux only. Clay's wording: "Windows is not supported in open beta." (Clay docs: clay-api-cli, checked Jul 18, 2026.)
 - Working this way costs no extra. Clay's docs: "API and CLI calls consume the same credits and actions as the equivalent work done in-product. There is no additional cost because work is triggered via the developer platform instead of the UI." (Clay docs: clay-api-cli, checked Jul 18, 2026.)
 - Door two, the Clay connector, is set up separately from Claude's own connectors page at claude.com/connectors/clay (Clay docs: using-clay-in-claude, checked Jun 27, 2026). You do not need it for this course.
-- The connection check was run live on July 19, 2026, and the block above is its real response with the two id numbers blanked out. It returns the account holder's name and the workspace's id number. There is no workspace name in the answer.
+- The connection check was run live on July 19, 2026, and the block above is the real shape of its response with placeholders in place of the details. It returns the account holder's name and the workspace's id number. There is no workspace name in the answer.
 - Used live on a real Clay account on July 19, 2026, with the Clay Agent Plugin at version 2.1.16 and the `clay` command at 0.1.17. The plugin and the command it installs are versioned separately, so a mismatch between those two numbers is not a broken install.
 - One honest gap. All three testers already had the plugin in place, so the install and sign-in step is the one part of the course nobody has walked through cold. The install sentence is Clay's own wording from their docs, and the account check above is a real response — but what appears on your screen while you sign in is not something this course has watched happen.
 

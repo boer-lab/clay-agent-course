@@ -30,6 +30,10 @@ COURSE = REPO / "course" if (REPO / "course").is_dir() else REPO.parent / "cours
 # or /docs, and nothing else.
 SITE = REPO / "docs"
 ASSETS = REPO / "assets"
+# Hand-written CSS/JS. These used to live in docs/ alongside the generated
+# pages, which made "never edit docs/" untrue and easy to trip over. They are
+# source now, and get copied into docs/ on every build.
+STATIC = REPO / "static"
 N_LESSONS = 6
 
 SITE_TITLE = "Using Clay in Claude Code"
@@ -39,9 +43,13 @@ BYLINE = "Boer Chen"
 BANNER = ("Every Clay fact here was run live on a real Clay account on July 19, 2026. "
           "Clay ships weekly — check the current docs before relying on any limit.")
 
-# Feedback goes to a Google Form the author owns. No email appears in the page
-# source; responses land in the author's private sheet.
-FEEDBACK_URL = "https://forms.gle/2iZnLKvbZJThkieP9"
+# Two different forms, deliberately. The footer link is for "this is broken /
+# this is wrong" and fires on every page; the survey is the end-of-course ask and
+# only appears once the reader has finished. Collapsing them into one form would
+# mix bug reports into course feedback and make both harder to read.
+# Both are Google Forms the author owns, so no email appears in the page source.
+FEEDBACK_URL = "https://forms.gle/tWV7KC5qhFK3eYji7"
+SURVEY_URL = "https://forms.gle/2iZnLKvbZJThkieP9"
 
 # The gift artifact. Source lives at repo/<GIFT_SOURCE>; the raw file is copied
 # into docs/ so the download link is a plain, ungated link.
@@ -276,6 +284,10 @@ def md_to_html(md):
 # ---------------------------------------------------------------- quiz extraction
 
 QUIZ_RE = re.compile(r"```quiz-json\s*\n(.*?)\n```", re.DOTALL)
+# Substituted for the fence so the quiz lands where the author put it. v1's
+# builder appended the quiz after the whole article, which pushed it below
+# "Fine print" on every lesson and inverted the intended reading order.
+QUIZ_MARKER = "<!--QUIZ-ROOT-->"
 
 
 def extract_quiz(md, name):
@@ -293,7 +305,7 @@ def extract_quiz(md, name):
         if n_correct != 1:
             print(f"  ERROR: {name}: quiz item {k + 1} has {n_correct} correct options "
                   "(engine expects exactly 1).")
-    return QUIZ_RE.sub("", md), data
+    return QUIZ_RE.sub(QUIZ_MARKER, md, count=1), data
 
 # ---------------------------------------------------------------- page templates
 
@@ -336,16 +348,24 @@ def top_nav(current=""):
             f"</div></nav>\n")
 
 
-def feedback_block():
-    return f"""<div class="feedback">
+def feedback_block(is_last_lesson=False):
+    """Footer feedback. The last lesson also carries the end-of-course survey,
+    which is a separate form from the report-a-problem link."""
+    block = f"""<div class="feedback">
 <a class="feedback-link" href="{FEEDBACK_URL}" target="_blank" rel="noopener">Suggest a fix or tell me what broke &rarr;</a>
 </div>"""
+    if is_last_lesson:
+        block += f"""
+<div class="feedback feedback-survey">
+<a class="survey-link" href="{SURVEY_URL}" target="_blank" rel="noopener">Finished the course? Tell me how it went &rarr;</a>
+</div>"""
+    return block
 
 
-def footer_html():
+def footer_html(is_last_lesson=False):
     return f"""<footer class="site-footer">
 <p class="banner">{html.escape(BANNER)}</p>
-{feedback_block()}
+{feedback_block(is_last_lesson)}
 <p><a href="colophon.html">How this course was built</a> &middot; <a href="index.html">Course home</a></p>
 </footer>"""
 
@@ -381,14 +401,15 @@ def build_lesson(n, md, titles, times):
 
     content = md_to_html(body_md)
 
-    quiz_html = ""
+    quiz_tail = ""
     if quiz:
         payload = json.dumps(quiz).replace("</", "<\\/")
-        quiz_html = f"""<section class="quiz-section" id="quiz">
-<h2>Check yourself</h2>
-<div id="quiz-root" data-lesson="{n}"></div>
-<script type="application/json" id="quiz-data">{payload}</script>
-</section>"""
+        content = content.replace(
+            QUIZ_MARKER,
+            f'<div class="quiz-section" id="quiz-root" data-lesson="{n}"></div>', 1)
+        quiz_tail = (f'<script type="application/json" id="quiz-data">{payload}</script>')
+    else:
+        content = content.replace(QUIZ_MARKER, "", 1)
 
     time_badge = (f' <span class="badge badge-time">{html.escape(times[n])}</span>'
                   if times[n] else "")
@@ -400,10 +421,9 @@ def build_lesson(n, md, titles, times):
 <article class="lesson-body">
 {content}
 </article>
-{quiz_html}
 {lesson_nav(n)}
-{footer_html()}
-</main>"""
+{footer_html(n == N_LESSONS - 1)}
+</main>{quiz_tail}"""
     lesson_title = (titles[n] if titles[n].lower().startswith("lesson")
                     else f"Lesson {n} — {titles[n]}")
     (SITE / f"{name}.html").write_text(
@@ -512,6 +532,20 @@ def build_index(titles, times):
         page(SITE_TITLE, body, body_class="home", nav=top_nav("home")), encoding="utf-8")
 
 
+def build_static():
+    """Copy the hand-written CSS/JS into the generated site."""
+    if not STATIC.is_dir():
+        print("  WARNING: repo/static missing — pages reference style.css and quiz.js.")
+        return
+    for name in ("style.css", "quiz.js", "interactions.js"):
+        src = STATIC / name
+        if src.is_file():
+            shutil.copy2(src, SITE / name)
+        else:
+            print(f"  WARNING: static/{name} missing — pages reference it.")
+    print("  copied static/ → docs/")
+
+
 def build_assets():
     if not ASSETS.is_dir():
         print("  NOTE: repo/assets missing — screenshots will not resolve.")
@@ -550,9 +584,7 @@ def main():
     build_colophon(); print("  built docs/colophon.html")
     build_index(titles, times); print("  built docs/index.html")
     build_assets()
-    for asset in ("style.css", "quiz.js", "interactions.js"):
-        if not (SITE / asset).exists():
-            print(f"  WARNING: docs/{asset} missing — pages reference it.")
+    build_static()
     print("done.")
 
 
