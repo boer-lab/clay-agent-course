@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starter prompts · Using Clay in Claude Code</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<nav class="top-nav"><div class="top-nav-inner"><a class="brand" href="index.html">Using Clay in Claude Code</a><div class="nav-pills" aria-label="Lessons"><a class="nav-pill" data-lesson="0" href="lesson-0.html" title="Lesson 0">0</a><a class="nav-pill" data-lesson="1" href="lesson-1.html" title="Lesson 1">1</a><a class="nav-pill" data-lesson="2" href="lesson-2.html" title="Lesson 2">2</a><a class="nav-pill" data-lesson="3" href="lesson-3.html" title="Lesson 3">3</a><a class="nav-pill" data-lesson="4" href="lesson-4.html" title="Lesson 4">4</a><a class="nav-pill" data-lesson="5" href="lesson-5.html" title="Lesson 5">5</a><a class="nav-pill nav-pill-text pill-current" href="gift.html" aria-current="page">Starter prompts</a></div></div></nav>
+<main class="lesson">
+<header class="lesson-header">
+<p class="lesson-badges"><span class="badge badge-num">The gift</span></p>
+<h1>Starter prompts</h1>
+<p class="download"><a href="starter-prompts.md" download>Download the raw markdown (starter-prompts.md)</a><br><small class="license-line">License: CC BY 4.0 — use it, adapt it, credit Boer Chen.</small></p>
+</header>
+<article class="lesson-body">
+<p>Everything this course had you say to Claude Code, on one page, plus an honest note on where this route stops. Copy a line, fill in the blanks, send it.</p>
+<p>Nothing here is code. They are sentences.</p>
+<h2>The prompts</h2>
+<h3>Connect Clay — Lesson 1</h3>
+<pre><code>Set up the Clay plugin by following the steps in
+https://github.com/clay-run/agent-plugins</code></pre>
+<p>Then, to check it worked:</p>
+<pre><code>Which Clay account are you connected to right now?</code></pre>
+<p>It comes back with the account holder's name and a workspace number. A number rather than a workspace name is normal.</p>
+<h3>Find companies — Lesson 2</h3>
+<pre><code>Find me ______ companies in ______ with at least ______ employees.</code></pre>
+<p>The list comes back in the conversation. It is not saved as a spreadsheet in your Clay account.</p>
+<p>Clay's search returns a different slice of companies each time, so your list will not match the one in the lesson — or the one you got an hour ago from the same request.</p>
+<p>If nothing comes back:</p>
+<pre><code>That came back empty, describe these companies differently and search again.</code></pre>
+<h3>Build the workflow — Lesson 3</h3>
+<pre><code>Create a Clay workflow called &quot;Company Research.&quot; Add a step that takes a
+company&#x27;s website and uses Clay&#x27;s AI web researcher (claygent) to return,
+in one or two words, the industry the company is in. Then run it on
+stripe.com and show me the result.</code></pre>
+<p>This is the one that leaves you something you keep. Open the link it gives you and you will see the workflow sitting in your Clay account.</p>
+<h3>Run it on more companies — Lesson 4</h3>
+<pre><code>Run Company Research on ______. Then run it again on ______. Show me both
+answers.</code></pre>
+<h3>Check its work — Lesson 4</h3>
+<pre><code>For the ______ run, show me the reasoning and the sources behind that
+answer, including the actual page it visited.</code></pre>
+<p>The answer, the confidence rating and the reasoning are all the researcher describing itself. The page it visited is the only part you can check with your own eyes. Open that one.</p>
+<h3>Change the question — Lesson 5</h3>
+<pre><code>In my Company Research workflow, change the question the research step
+asks. Instead of the industry, ask ______. Then run it on ______ and show
+me the answer.</code></pre>
+<p>Ask for the shape of the answer you want — a few words, a yes or no, one of three labels you name. An open-ended question gets you an essay.</p>
+<h3>When something errors</h3>
+<pre><code>That returned an error, read it and tell me what happened.</code></pre>
+<p>Clay's errors usually name the fix. A retry costs a credit or two, not nothing.</p>
+<h3>When the answer does not match the question</h3>
+<pre><code>Show me the exact question my research step actually ran. If it is not
+______, set it back to that and run it again.</code></pre>
+<p>This is the failure that does not announce itself. Nothing errors, and a source check will wave it through. Reading the question back is the only way to catch it.</p>
+<h2>What this route will and will not do</h2>
+<p>Checked live on a real Clay account on July 19, 2026. Clay ships weekly, so re-check anything here before you lean on it.</p>
+<p><strong>Works:</strong></p>
+<ul>
+<li>Searching Clay's company data and getting real companies back.</li>
+<li>Building workflows by asking, and running them.</li>
+<li>Clay's AI web researcher (claygent), including the reasoning and the sources behind each answer.</li>
+<li>Run history — every run is kept, with its status, duration and cost.</li>
+</ul>
+<p><strong>Does not work through this route:</strong></p>
+<ul>
+<li><strong>Building a spreadsheet-style Clay table.</strong> Clay's own documentation says there are no current plans to support table building through the developer platform, and reading existing tables this way is limited to Enterprise plans. This is Clay's boundary, not a Claude Code limitation, and no rewording gets past it. Nothing in this course needs a table.</li>
+<li><strong>Windows.</strong> Clay's CLI and API are supported on Mac and Linux; Windows is not supported during the open beta.</li>
+</ul>
+<p><strong>Worth knowing:</strong></p>
+<ul>
+<li>The question you set does not live inside your workflow. It lives in a setting Clay shares across your whole workspace, so changing it in one place can change it somewhere else. Lesson 5 explains why it happens; the prompt above is how you catch it. After changing a question, read it back off the finished run rather than off the step's settings — the run tells you what actually executed.</li>
+<li>Search results are capped per request and per month, and the monthly cap is easier to hit than you expect. Spend it on companies you do not already have — if you already have a list of websites, hand it straight to the workflow instead. Running into the cap gives you an error naming your usage and the reset date, so you will know it when it happens.</li>
+<li>Working this way costs no extra. Clay charges the same credits and actions as doing the same work in Clay's own interface.</li>
+<li>The Agent Plugin is in open beta and workflows are the newest part of it, so an occasional run stalling or failing is normal rather than a sign you built it wrong. Re-running is the fix.</li>
+</ul>
+<p>Sources for the limits above: Clay's <code>clay-api-cli</code> documentation, checked July 18, 2026, plus live runs on a real Clay account on July 19, 2026, including hitting the monthly search cap.</p>
+<p>License: CC BY 4.0 — use it, adapt it, credit Boer Chen.</p>
+</article>
+<footer class="site-footer">
+<p class="banner">Every Clay fact here was run live on a real Clay account on July 19, 2026. Clay ships weekly — check the current docs before relying on any limit.</p>
+<div class="feedback">
+<a class="feedback-link" href="https://forms.gle/2iZnLKvbZJThkieP9" target="_blank" rel="noopener">Suggest a fix or tell me what broke &rarr;</a>
+</div>
+<p><a href="colophon.html">How this course was built</a> &middot; <a href="index.html">Course home</a></p>
+</footer>
+</main>
+<script src="quiz.js"></script>
+<script src="interactions.js"></script>
+</body>
+</html>

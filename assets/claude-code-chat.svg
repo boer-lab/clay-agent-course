@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" width="720" height="430" role="img" aria-label="Illustration of a chat-style interface: a typed question in plain English and a reply written in ordinary sentences, with a message box at the bottom.">
+  <defs>
+    <style>
+      .win   { fill: #ffffff; stroke: #d8dcdf; stroke-width: 1; }
+      .bar   { fill: #f2f2ee; }
+      .ink   { fill: #1b2126; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 15px; }
+      .mut   { fill: #5a656e; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 13px; }
+      .you   { fill: #eef3f0; stroke: #dbe5df; stroke-width: 1; }
+      .field { fill: #ffffff; stroke: #d8dcdf; stroke-width: 1; }
+      .lbl   { fill: #14804a; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="719" height="429" rx="12" class="win"/>
+  <path d="M0.5 12.5A12 12 0 0 1 12.5 0.5h695A12 12 0 0 1 719.5 12.5V44H0.5Z" class="bar"/>
+  <circle cx="24" cy="22" r="5" fill="#e0655f"/>
+  <circle cx="42" cy="22" r="5" fill="#e0b45f"/>
+  <circle cx="60" cy="22" r="5" fill="#63b96b"/>
+
+  <text x="88" y="27" class="mut">a window you type into</text>
+
+  <text x="36" y="82" class="lbl">YOU</text>
+  <rect x="36" y="94" width="500" height="42" rx="10" class="you"/>
+  <text x="52" y="121" class="ink">I want to build a personal budget tracker. What would I need?</text>
+
+  <text x="36" y="180" class="lbl">IT ANSWERS</text>
+  <text x="36" y="212" class="ink">You would need three things: a place to record what comes in, a</text>
+  <text x="36" y="238" class="ink">place to record what goes out, and a way to group spending into</text>
+  <text x="36" y="264" class="ink">categories so you can see where the money actually went.</text>
+  <text x="36" y="296" class="ink">Want me to start one for you?</text>
+
+  <rect x="36" y="336" width="648" height="52" rx="12" class="field"/>
+  <text x="56" y="367" class="mut">Type a message…</text>
+  <circle cx="654" cy="362" r="15" fill="#14804a"/>
+  <path d="M654 355.5v13M648.5 361l5.5-5.5 5.5 5.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="36" y="414" class="mut">No code anywhere. You write a sentence; it writes back.</text>
+</svg>

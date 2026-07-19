@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2 — Find real companies · Using Clay in Claude Code</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<nav class="top-nav"><div class="top-nav-inner"><a class="brand" href="index.html">Using Clay in Claude Code</a><div class="nav-pills" aria-label="Lessons"><a class="nav-pill" data-lesson="0" href="lesson-0.html" title="Lesson 0">0</a><a class="nav-pill" data-lesson="1" href="lesson-1.html" title="Lesson 1">1</a><a class="nav-pill pill-current" data-lesson="2" href="lesson-2.html" title="Lesson 2" aria-current="page">2</a><a class="nav-pill" data-lesson="3" href="lesson-3.html" title="Lesson 3">3</a><a class="nav-pill" data-lesson="4" href="lesson-4.html" title="Lesson 4">4</a><a class="nav-pill" data-lesson="5" href="lesson-5.html" title="Lesson 5">5</a><a class="nav-pill nav-pill-text" href="gift.html">Starter prompts</a></div></div></nav>
+<main class="lesson">
+<header class="lesson-header">
+<p class="lesson-badges"><span class="badge badge-num">Lesson 2</span> <span class="badge badge-time">4 min</span></p>
+<h1>Lesson 2 — Find real companies</h1>
+</header>
+<article class="lesson-body">
+<h2>Why this matters</h2>
+<p>Say you want a list of companies in one particular field. Places you might apply to, or the competitors of a company you are curious about. Doing that by hand means a search box, a pile of open tabs, and copying names and websites into a document one at a time, and a while later you are still not done.</p>
+<p>Here you describe the kind of company you are after, in ordinary English, and a list of real companies comes back with their websites on it.</p>
+<p>You do not need to know how Clay's search works, and you will not type anything that looks like code.</p>
+<h2>See it</h2>
+<p>Say you want large insurance companies in the United States. The ask:</p>
+<blockquote><p>Find me insurance companies in the United States with at least a thousand employees.</p></blockquote>
+<p>You do not name a single filter and you do not type a code. Claude Code reads that sentence and picks the filters itself (industry: insurance, country: United States, size: a thousand employees and up), runs the search against Clay's company database, and comes back.</p>
+<p>Twenty companies, with more waiting behind them. The top of the list, as an example of the shape you get back:</p>
+<pre><code>HUB International       hubinternational.com
+Farmers Insurance       farmers.com
+Xceedance               xceedance.com
+GEICO                   geico.com
+Zurich North America    zurichna.com
+ReSource Pro            resourcepro.com</code></pre>
+<p>It is just a list. Real companies, real websites, and each row has more on it than the excerpt shows: what the company does, how big it is, where it is based, roughly what it earns.</p>
+<p>Run that same search yourself and your list will not match mine. That is not a mistake. Clay returns a different slice each time it runs, so twenty completely different insurance companies is just as correct an answer. A few rows may repeat, and one every so often comes back with no website at all, so skip those rather than assuming something broke.</p>
+<p>That list came back <strong>in the conversation</strong>. Clay did not create a spreadsheet in your account, and if you go looking for one you will not find it. You read the list, you copy what you want, and that is the end of it.</p>
+<p>The thing you build and keep inside Clay comes next. Two lessons from now you will point it at a list like this one.</p>
+<h2>Try it</h2>
+<p>You are going to do the same thing, with a kind of company you pick. You are done when there are company names and websites on your screen that you did not type. If the list comes back empty instead, that is not a mistake on your part, and the fine print explains what it means: reply with "that came back empty, describe these companies differently and search again."</p>
+<p>A search only reads, so nothing you type here changes anything in your Clay account. It does draw on a monthly allowance of search results, though, and that allowance is easier to use up than you would expect. Aim once rather than firing off ten rough attempts.</p>
+<p>If what comes back is an error that mentions your plan or an upgrade, that is the month's hundred results used up, and nothing is broken. Running out announces itself as an error rather than a quiet empty list, the count resets next month, and you can do the rest of the course without it by using geico.com and zurichna.com wherever a later lesson asks you for a company.</p>
+<p>Fill in the blanks:</p>
+<blockquote><p>Find me \_\_\_\_\_\_ companies in \_\_\_\_\_\_ with at least \_\_\_\_\_\_ employees.</p></blockquote>
+<p>"Find me hospital software companies in Canada with at least fifty employees." "Find me video game studios in Japan with at least a hundred employees." Pick any kind of company you are actually curious about, whether that is the one you are interviewing at next week or a field you are thinking about working in.</p>
+<p>Send it, and you should get a list back in the same shape as the one above.</p>
+<h2>Check yourself</h2>
+<h2>Fine print</h2>
+<details>
+<summary>The exact steps, dates, and limits</summary>
+<ul>
+<li>Run live on a real Clay account on July 19, 2026. The plain-English ask above became a search for industry "Insurance", country "United States", and headcount thresholds of 1,000 / 5,000 / 10,000. It returned 20 companies with more available. The six names in the lesson come from that run and are printed as an example of the shape, not as the result you should expect: the same filters, run again on the same account on the same day, returned twenty different insurance companies with none of those six among them.</li>
+<li>Under the hood the agent does three things: checks which filters Clay's search offers, creates the search, then runs it. You never type any of that.</li>
+<li>Each result comes with name, description, company type, size, country, location, website, industry, annual revenue and total funding range, plus a LinkedIn page. The excerpt in the lesson shows two of those.</li>
+<li>Search results are capped per request and per month, and how many you get depends on your Clay plan (Clay docs: clay-api-cli, checked Jul 18, 2026). The cap is real and reachable: it was hit live on Jul 19, 2026 at 100 results for the month. Running into it returns an error that names how many you have used and the date it resets, not an empty list, so you will know exactly what happened.</li>
+<li>Why empty happens: when the agent searches on a filter Clay accepts but that carries no values behind it, the search returns an empty list rather than an error, verified live Jul 19, 2026. A value outside a filter's allowed list behaves differently and does produce an error, and that error names the valid values, so the agent can usually correct itself. The silent-empty case is the one that needs you to re-describe.</li>
+<li>On the missing spreadsheet: Clay says this way of building is for workflows only, and there are no plans to let it build spreadsheet-style tables (Clay docs: clay-api-cli, checked Jul 18, 2026).</li>
+</ul>
+</details>
+</article>
+<section class="quiz-section" id="quiz">
+<h2>Check yourself</h2>
+<div id="quiz-root" data-lesson="2"></div>
+<script type="application/json" id="quiz-data">{"lesson": 2, "items": [{"q": "You want mid-sized logistics companies in Germany. Which ask gets you further?", "options": [{"text": "\"List every logistics company you know of in Germany.\"", "correct": false, "why": "That asks the agent to recite from memory instead of searching Clay, so you get names without websites and no way to tell what is current. Say \"find me\" and let it run a real search."}, {"text": "\"Search Clay with industry = Logistics, country = Germany, size = 200-500.\"", "correct": false, "why": "You are guessing at Clay's filter names and the value formats behind them, and its industry labels may not match the word you reached for either. All of that is something the agent can simply look up."}, {"text": "\"Find me mid-sized logistics companies in Germany.\"", "correct": true, "why": "Plain description in, agent picks the filters. You never have to learn Clay's filter names."}]}, {"q": "Your search comes back with nothing. No error, no warning, just an empty list. Most likely?", "options": [{"text": "The agent searched on a filter that Clay accepts but that holds no matching values, so nothing came back.", "correct": true, "why": "Clay takes the filter, finds nothing behind it, and hands back an empty list instead of complaining. Reword your description in plainer terms and search again."}, {"text": "There genuinely are no companies like that.", "correct": false, "why": "Before you decide they do not exist, ask yourself whether you described them the way Clay would label them. Re-describe once, then decide."}, {"text": "You have used up your searches for the month.", "correct": false, "why": "Running out of results is a real limit, but it does not arrive as a silent empty list."}]}, {"q": "The list is on your screen and you want it. You open Clay in your browser to go find it. What is there?", "options": [{"text": "A new spreadsheet holding those companies.", "correct": false, "why": "Most people expect that, and it is the one expectation worth dropping early. The search hands the list to you in the conversation instead of storing it."}, {"text": "Nothing from the search. The list lived in the conversation.", "correct": true, "why": "The list was never saved anywhere, and that is the design rather than a missing setting. What you build and keep in Clay is the workflow in Lesson 3, and that one does show up in your account."}, {"text": "The list, but locked until you upgrade your plan.", "correct": false, "why": "It was never stored. The search hands results back to you rather than saving them, so this is about where results go, not about what you are allowed to see."}]}]}</script>
+</section>
+<nav class="lesson-nav"><a class="nav-prev" href="lesson-1.html">&larr; Lesson 1</a><a class="nav-next" href="lesson-3.html">Lesson 3 &rarr;</a></nav>
+<footer class="site-footer">
+<p class="banner">Every Clay fact here was run live on a real Clay account on July 19, 2026. Clay ships weekly — check the current docs before relying on any limit.</p>
+<div class="feedback">
+<a class="feedback-link" href="https://forms.gle/2iZnLKvbZJThkieP9" target="_blank" rel="noopener">Suggest a fix or tell me what broke &rarr;</a>
+</div>
+<p><a href="colophon.html">How this course was built</a> &middot; <a href="index.html">Course home</a></p>
+</footer>
+</main>
+<script src="quiz.js"></script>
+<script src="interactions.js"></script>
+</body>
+</html>

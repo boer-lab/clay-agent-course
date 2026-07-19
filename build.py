@@ -1,0 +1,560 @@
+#!/usr/bin/env python3
+"""Static-site builder for "Using Clay in Claude Code" (v2).
+
+Reads course/lesson-0.md .. lesson-5.md (plus optional course/colophon.md and
+the gift artifact at ./starter-prompts.md) and writes HTML to ./docs/. Stdlib only.
+
+    cd repo && python3 build.py
+
+Idempotent: safe to re-run whenever the lesson markdown changes.
+
+Descended from v1's builder. What changed for v2: the course teaches a build rather
+than a discipline, so the NotebookLM embeds, the flashcard deck, the "which tool?"
+reference page and the FormSubmit plumbing are all gone. Screenshot comments now
+resolve to real images when a file is named. Feedback is a plain link to a Google
+Form the author owns, so no endpoint token and no email ever enters this repo.
+"""
+
+import html
+import json
+import re
+import shutil
+import sys
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parent
+# The lesson markdown sits beside the repo while drafting and inside it once
+# published, so accept either layout.
+COURSE = REPO / "course" if (REPO / "course").is_dir() else REPO.parent / "course"
+# Output is "docs" because GitHub Pages serves a project site from the repo root
+# or /docs, and nothing else.
+SITE = REPO / "docs"
+ASSETS = REPO / "assets"
+N_LESSONS = 6
+
+SITE_TITLE = "Using Clay in Claude Code"
+TAGLINE = ("You do not need to know how to code. "
+           "In six short lessons you build something real in Clay by asking for it in plain English.")
+BYLINE = "Boer Chen"
+BANNER = ("Every Clay fact here was run live on a real Clay account on July 19, 2026. "
+          "Clay ships weekly — check the current docs before relying on any limit.")
+
+# Feedback goes to a Google Form the author owns. No email appears in the page
+# source; responses land in the author's private sheet.
+FEEDBACK_URL = "https://forms.gle/2iZnLKvbZJThkieP9"
+
+# The gift artifact. Source lives at repo/<GIFT_SOURCE>; the raw file is copied
+# into docs/ so the download link is a plain, ungated link.
+GIFT_SOURCE = "starter-prompts.md"
+GIFT_NAV_LABEL = "Starter prompts"
+GIFT_BADGE = "The gift"
+GIFT_BLURB = ("The exact plain-English asks that build, run, and reuse the workflow — "
+              "copy them straight into Claude Code.")
+GIFT_LICENSE = "License: CC BY 4.0 — use it, adapt it, credit Boer Chen."
+
+# ---------------------------------------------------------------- inline markdown
+
+def _restore_codes(text, codes):
+    for i, c in enumerate(codes):
+        text = text.replace(f"\x00{i}\x00", c)
+    return text
+
+
+def inline(text):
+    """Convert inline markdown (code, bold, italic, links) on an escaped string."""
+    text = html.escape(text, quote=False)
+    codes = []
+
+    def stash(m):
+        codes.append(f"<code>{m.group(1)}</code>")
+        return f"\x00{len(codes) - 1}\x00"
+
+    text = re.sub(r"`([^`]+)`", stash, text)
+    text = re.sub(r"\*\*([^*]+(?:\*[^*]+)*)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"(?<![\w*])\*([^*\s][^*]*)\*(?![\w*])", r"<em>\1</em>", text)
+    text = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r'<a href="\2">\1</a>', text)
+    return _restore_codes(text, codes)
+
+# ---------------------------------------------------------------- comment handling
+
+# A screenshot comment may name its image file, which is the only way a real
+# picture reaches the page:
+#     <!-- SCREENSHOT: file=runs-view.png | Clay Runs view, workspace name cropped. -->
+# Without a file= (or if the file is missing from repo/assets) the slot renders as
+# a visible "pending" box, so a missing image is loud at review time rather than
+# silently absent.
+SHOT_FILE_RE = re.compile(r"^\s*file\s*=\s*([A-Za-z0-9._-]+)\s*\|\s*(.*)$", re.DOTALL)
+
+
+def comment_html(body):
+    """Map an HTML comment's body to replacement HTML (or None to keep invisible)."""
+    stripped = body.strip()
+    up = stripped.upper()
+
+    if up.startswith("SCREENSHOT"):
+        rest = stripped.split(":", 1)[1].strip() if ":" in stripped else ""
+        m = SHOT_FILE_RE.match(rest)
+        if m:
+            fname, caption = m.group(1), m.group(2).strip()
+            if (ASSETS / fname).is_file():
+                # SVGs are inlined rather than referenced: one fewer request, and
+                # the figure scales from its viewBox without needing intrinsic
+                # dimensions. The width/height attributes are stripped so the
+                # stylesheet controls the size.
+                if fname.lower().endswith(".svg"):
+                    svg = (ASSETS / fname).read_text(encoding="utf-8").strip()
+                    svg = re.sub(r'\s(width|height)="[^"]*"', "", svg, count=2)
+                    return (f'<figure class="shot shot-inline">{svg}'
+                            f"<figcaption>{html.escape(caption)}</figcaption></figure>")
+                return ('<figure class="shot">'
+                        f'<a href="assets/{fname}">'
+                        f'<img src="assets/{fname}" loading="lazy" alt="{html.escape(caption, quote=True)}">'
+                        '</a>'
+                        f"<figcaption>{html.escape(caption)}</figcaption></figure>")
+            print(f"  WARNING: screenshot file missing from repo/assets: {fname}")
+            caption_txt = caption
+        else:
+            caption_txt = rest
+        return ('<figure class="slot slot-screenshot">'
+                '<div class="slot-frame">Screenshot pending</div>'
+                f"<figcaption>{html.escape(caption_txt)}</figcaption></figure>")
+
+    if up.startswith("GIFT-ARTIFACT SLOT"):
+        return ('<p class="gift-inline"><a href="gift.html">'
+                f"{html.escape(GIFT_NAV_LABEL)} &rarr;</a></p>")
+
+    pending_prefixes = ("BO-OPEN", "BO-CLOSE", "EMBED", "ASSET", "VIDEO", "AUDIO")
+    if any(up.startswith(p) for p in pending_prefixes):
+        return (f'<div class="slot slot-pending">Asset pending &middot; '
+                f"{html.escape(stripped)}</div>")
+    return None  # pass through as an invisible comment
+
+# ---------------------------------------------------------------- block markdown
+
+RAW_TAGS = {"details", "summary", "figure", "figcaption", "div", "span",
+            "section", "aside", "table", "thead", "tbody", "tr", "td", "th",
+            "br", "hr", "img", "kbd", "mark", "sup", "sub"}
+
+
+def md_to_html(md):
+    """Convert the markdown subset to HTML. Line-based state machine."""
+    out = []
+    lines = md.split("\n")
+    i = 0
+    para = []
+    list_stack = None  # "ul" | "ol" | None
+    quote = []
+
+    def flush_para():
+        if para:
+            out.append(f"<p>{inline(' '.join(para))}</p>")
+            para.clear()
+
+    def flush_list():
+        nonlocal list_stack
+        if list_stack:
+            out.append(f"</{list_stack}>")
+            list_stack = None
+
+    def flush_quote():
+        if quote:
+            inner = md_to_html("\n".join(quote))
+            out.append(f"<blockquote>{inner}</blockquote>")
+            quote.clear()
+
+    def flush_all():
+        flush_para(); flush_list(); flush_quote()
+
+    while i < len(lines):
+        line = lines[i]
+
+        m = re.match(r"^```(\w[\w-]*)?\s*$", line)
+        if m:
+            flush_all()
+            lang = m.group(1) or ""
+            buf = []
+            i += 1
+            while i < len(lines) and not lines[i].startswith("```"):
+                buf.append(lines[i]); i += 1
+            i += 1
+            cls = f' class="language-{lang}"' if lang else ""
+            out.append(f"<pre><code{cls}>{html.escape(chr(10).join(buf))}</code></pre>")
+            continue
+
+        if line.lstrip().startswith("<!--"):
+            flush_all()
+            buf = [line]
+            while "-->" not in buf[-1] and i + 1 < len(lines):
+                i += 1; buf.append(lines[i])
+            i += 1
+            whole = "\n".join(buf)
+            body = re.sub(r"^\s*<!--", "", whole)
+            body = re.sub(r"-->\s*$", "", body)
+            repl = comment_html(body)
+            out.append(repl if repl is not None else whole)
+            continue
+
+        if line.startswith(">"):
+            flush_para(); flush_list()
+            quote.append(re.sub(r"^> ?", "", line))
+            i += 1
+            continue
+        elif quote:
+            flush_quote()
+
+        if not line.strip():
+            flush_all()
+            i += 1
+            continue
+
+        m = re.match(r"^(#{1,3})\s+(.*)$", line)
+        if m:
+            flush_all()
+            level = len(m.group(1))
+            out.append(f"<h{level}>{inline(m.group(2).strip())}</h{level}>")
+            i += 1
+            continue
+
+        # pipe table: a header row, a | --- | separator, then body rows.
+        # v1's builder had no table support and silently flattened tables into a
+        # paragraph of pipes; lesson 4 uses one, so it is handled here.
+        if (line.lstrip().startswith("|")
+                and i + 1 < len(lines)
+                and re.match(r"^\s*\|[\s:|-]+\|\s*$", lines[i + 1])):
+            flush_all()
+
+            def split_row(row):
+                return [c.strip() for c in row.strip().strip("|").split("|")]
+
+            head = split_row(line)
+            i += 2  # header + separator
+            body_rows = []
+            while i < len(lines) and lines[i].lstrip().startswith("|"):
+                body_rows.append(split_row(lines[i]))
+                i += 1
+            out.append('<div class="table-wrap"><table><thead><tr>'
+                       + "".join(f"<th>{inline(c)}</th>" for c in head)
+                       + "</tr></thead><tbody>")
+            for row in body_rows:
+                out.append("<tr>" + "".join(f"<td>{inline(c)}</td>" for c in row) + "</tr>")
+            out.append("</tbody></table></div>")
+            continue
+
+        m = re.match(r"^\s*[-*]\s+(.*)$", line)
+        n = re.match(r"^\s*\d+\.\s+(.*)$", line)
+        if m or n:
+            flush_para(); flush_quote()
+            kind = "ul" if m else "ol"
+            if list_stack != kind:
+                flush_list()
+                out.append(f"<{kind}>")
+                list_stack = kind
+            item = (m or n).group(1)
+            while (i + 1 < len(lines) and lines[i + 1].strip()
+                   and re.match(r"^\s{2,}\S", lines[i + 1])
+                   and not re.match(r"^\s*([-*]|\d+\.)\s+", lines[i + 1])):
+                i += 1
+                item += " " + lines[i].strip()
+            out.append(f"<li>{inline(item)}</li>")
+            i += 1
+            continue
+        flush_list()
+
+        m = re.match(r"^\s*</?([a-zA-Z][a-zA-Z0-9-]*)[^>]*>", line)
+        if m and m.group(1).lower() in RAW_TAGS and re.search(r">\s*$", line):
+            flush_all()
+            out.append(line.strip())
+            i += 1
+            continue
+
+        para.append(line.strip())
+        i += 1
+
+    flush_all()
+    return "\n".join(out)
+
+# ---------------------------------------------------------------- quiz extraction
+
+QUIZ_RE = re.compile(r"```quiz-json\s*\n(.*?)\n```", re.DOTALL)
+
+
+def extract_quiz(md, name):
+    m = QUIZ_RE.search(md)
+    if not m:
+        print(f"  WARNING: {name}: no quiz-json block found.")
+        return md, None
+    try:
+        data = json.loads(m.group(1))
+    except json.JSONDecodeError as e:
+        print(f"  ERROR: {name}: quiz-json failed to parse ({e}); quiz dropped.")
+        return QUIZ_RE.sub("", md), None
+    for k, item in enumerate(data.get("items", [])):
+        n_correct = sum(1 for o in item.get("options", []) if o.get("correct"))
+        if n_correct != 1:
+            print(f"  ERROR: {name}: quiz item {k + 1} has {n_correct} correct options "
+                  "(engine expects exactly 1).")
+    return QUIZ_RE.sub("", md), data
+
+# ---------------------------------------------------------------- page templates
+
+def page(title, body, extra_head="", body_class="", nav=""):
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{html.escape(title)}</title>
+<link rel="stylesheet" href="style.css">
+{extra_head}</head>
+<body class="{body_class}">
+{nav}{body}
+<script src="quiz.js"></script>
+<script src="interactions.js"></script>
+</body>
+</html>
+"""
+
+
+def top_nav(current=""):
+    """Sticky top bar: course title (links home) + lesson pills + the gift page.
+
+    quiz.js marks pills with a check from its localStorage keys; the current
+    page's pill is filled at build time via .pill-current."""
+    pills = []
+    for n in range(N_LESSONS):
+        cls = "nav-pill" + (" pill-current" if current == str(n) else "")
+        cur = ' aria-current="page"' if current == str(n) else ""
+        pills.append(f'<a class="{cls}" data-lesson="{n}" href="lesson-{n}.html" '
+                     f'title="Lesson {n}"{cur}>{n}</a>')
+    if (REPO / GIFT_SOURCE).is_file():
+        cls = "nav-pill nav-pill-text" + (" pill-current" if current == "gift" else "")
+        cur = ' aria-current="page"' if current == "gift" else ""
+        pills.append(f'<a class="{cls}" href="gift.html"{cur}>{html.escape(GIFT_NAV_LABEL)}</a>')
+    return (f'<nav class="top-nav"><div class="top-nav-inner">'
+            f'<a class="brand" href="index.html">{html.escape(SITE_TITLE)}</a>'
+            f'<div class="nav-pills" aria-label="Lessons">{"".join(pills)}</div>'
+            f"</div></nav>\n")
+
+
+def feedback_block():
+    return f"""<div class="feedback">
+<a class="feedback-link" href="{FEEDBACK_URL}" target="_blank" rel="noopener">Suggest a fix or tell me what broke &rarr;</a>
+</div>"""
+
+
+def footer_html():
+    return f"""<footer class="site-footer">
+<p class="banner">{html.escape(BANNER)}</p>
+{feedback_block()}
+<p><a href="colophon.html">How this course was built</a> &middot; <a href="index.html">Course home</a></p>
+</footer>"""
+
+
+def lesson_nav(n):
+    prev_a = (f'<a class="nav-prev" href="lesson-{n - 1}.html">&larr; Lesson {n - 1}</a>'
+              if n > 0 else '<a class="nav-prev" href="index.html">&larr; Course home</a>')
+    if n < N_LESSONS - 1:
+        next_a = f'<a class="nav-next" href="lesson-{n + 1}.html">Lesson {n + 1} &rarr;</a>'
+    elif (REPO / GIFT_SOURCE).is_file():
+        next_a = f'<a class="nav-next" href="gift.html">{html.escape(GIFT_NAV_LABEL)} &rarr;</a>'
+    else:
+        next_a = '<a class="nav-next" href="index.html">Course home &rarr;</a>'
+    return f'<nav class="lesson-nav">{prev_a}{next_a}</nav>'
+
+# ---------------------------------------------------------------- build steps
+
+def parse_lesson_meta(md, name):
+    title_m = re.search(r"^#\s+(.+)$", md, re.MULTILINE)
+    time_m = re.search(r"^\*\*Time:\*\*\s*(.+?)\s*$", md, re.MULTILINE)
+    title = title_m.group(1).strip() if title_m else name
+    time = time_m.group(1).strip() if time_m else ""
+    return title, time
+
+
+def build_lesson(n, md, titles, times):
+    name = f"lesson-{n}"
+    body_md, quiz = extract_quiz(md, name)
+
+    # strip the h1 + Time line; they render in the page header instead
+    body_md = re.sub(r"^#\s+.+\n+", "", body_md, count=1)
+    body_md = re.sub(r"^\*\*Time:\*\*.*\n+", "", body_md, count=1, flags=re.MULTILINE)
+
+    content = md_to_html(body_md)
+
+    quiz_html = ""
+    if quiz:
+        payload = json.dumps(quiz).replace("</", "<\\/")
+        quiz_html = f"""<section class="quiz-section" id="quiz">
+<h2>Check yourself</h2>
+<div id="quiz-root" data-lesson="{n}"></div>
+<script type="application/json" id="quiz-data">{payload}</script>
+</section>"""
+
+    time_badge = (f' <span class="badge badge-time">{html.escape(times[n])}</span>'
+                  if times[n] else "")
+    body = f"""<main class="lesson">
+<header class="lesson-header">
+<p class="lesson-badges"><span class="badge badge-num">Lesson {n}</span>{time_badge}</p>
+<h1>{inline(titles[n])}</h1>
+</header>
+<article class="lesson-body">
+{content}
+</article>
+{quiz_html}
+{lesson_nav(n)}
+{footer_html()}
+</main>"""
+    lesson_title = (titles[n] if titles[n].lower().startswith("lesson")
+                    else f"Lesson {n} — {titles[n]}")
+    (SITE / f"{name}.html").write_text(
+        page(f"{lesson_title} · {SITE_TITLE}", body, nav=top_nav(str(n))), encoding="utf-8")
+
+
+def build_gift():
+    src = REPO / GIFT_SOURCE
+    if not src.is_file():
+        print(f"  NOTE: repo/{GIFT_SOURCE} missing — gift page skipped.")
+        return
+    md = src.read_text(encoding="utf-8")
+    shutil.copyfile(src, SITE / GIFT_SOURCE)
+    title_m = re.search(r"^#\s+(.+)$", md, re.MULTILINE)
+    title = title_m.group(1).strip() if title_m else GIFT_NAV_LABEL
+    body_md = re.sub(r"^#\s+.+\n+", "", md, count=1)
+    content = md_to_html(body_md)
+    download = (f'<p class="download"><a href="{GIFT_SOURCE}" download>'
+                f"Download the raw markdown ({GIFT_SOURCE})</a><br>"
+                f'<small class="license-line">{html.escape(GIFT_LICENSE)}</small></p>')
+    body = f"""<main class="lesson">
+<header class="lesson-header">
+<p class="lesson-badges"><span class="badge badge-num">{html.escape(GIFT_BADGE)}</span></p>
+<h1>{inline(title)}</h1>
+{download}
+</header>
+<article class="lesson-body">
+{content}
+</article>
+{footer_html()}
+</main>"""
+    (SITE / "gift.html").write_text(
+        page(f"{title} · {SITE_TITLE}", body, nav=top_nav("gift")), encoding="utf-8")
+    print(f"  built docs/gift.html (+ raw docs/{GIFT_SOURCE})")
+
+
+def build_colophon():
+    src = COURSE / "colophon.md"
+    if src.is_file():
+        md = src.read_text(encoding="utf-8")
+        title_m = re.search(r"^#\s+(.+)$", md, re.MULTILINE)
+        title = title_m.group(1).strip() if title_m else "How this course was built"
+        body_md = re.sub(r"^#\s+.+\n+", "", md, count=1)
+        content = md_to_html(body_md)
+    else:
+        title = "How this course was built"
+        content = "<p>Colophon pending.</p>"
+        print("  NOTE: course/colophon.md missing — placeholder used.")
+    body = f"""<main class="lesson">
+<header class="lesson-header">
+<h1>{inline(title)}</h1>
+</header>
+<article class="lesson-body">
+{content}
+</article>
+{footer_html()}
+</main>"""
+    (SITE / "colophon.html").write_text(
+        page(f"{title} · {SITE_TITLE}", body, nav=top_nav("colophon")), encoding="utf-8")
+
+
+def build_index(titles, times):
+    items = []
+    for n in range(N_LESSONS):
+        t = (f'<span class="badge badge-time">{html.escape(times[n])}</span>'
+             if times[n] else "")
+        items.append(f"""<li class="lesson-card">
+<a href="lesson-{n}.html">
+<span class="badge badge-num">Lesson {n}</span>
+<span class="card-title">{inline(titles[n])}</span>
+{t}
+<span class="progress-chip" data-lesson="{n}"></span>
+</a>
+</li>""")
+    mins = 0
+    for t in times:
+        m = re.match(r"(\d+)", t or "")
+        if m:
+            mins += int(m.group(1))
+    total = (f'<p class="total-time">Six lessons, about {mins} minutes total.</p>'
+             if mins else "")
+    gift_html = ""
+    if (REPO / GIFT_SOURCE).is_file():
+        gift_html = (f'<section class="landing-extras"><p>'
+                     f'<a class="sop-link" href="gift.html">{html.escape(GIFT_NAV_LABEL)}</a> — '
+                     f"{html.escape(GIFT_BLURB)}</p></section>")
+    body = f"""<main class="landing">
+<header class="landing-header">
+<h1>{html.escape(SITE_TITLE)}</h1>
+<p class="subtitle">{html.escape(TAGLINE)}</p>
+<p class="byline">By {html.escape(BYLINE)}</p>
+<p class="banner">{html.escape(BANNER)}</p>
+{total}
+<div class="course-progress" id="course-progress" hidden>
+<span class="course-progress-label"></span>
+<span class="course-progress-track"><span class="course-progress-fill"></span></span>
+</div>
+</header>
+<ol class="lesson-list" start="0">
+{chr(10).join(items)}
+</ol>
+{gift_html}
+{footer_html()}
+</main>"""
+    (SITE / "index.html").write_text(
+        page(SITE_TITLE, body, body_class="home", nav=top_nav("home")), encoding="utf-8")
+
+
+def build_assets():
+    if not ASSETS.is_dir():
+        print("  NOTE: repo/assets missing — screenshots will not resolve.")
+        return
+    dst = SITE / "assets"
+    dst.mkdir(exist_ok=True)
+    count = 0
+    for f in ASSETS.iterdir():
+        if f.is_file():
+            shutil.copy2(f, dst / f.name)
+            count += 1
+    print(f"  copied {count} assets → docs/assets/")
+
+
+def main():
+    SITE.mkdir(exist_ok=True)
+    titles, times, mds = [], [], []
+    missing = []
+    for n in range(N_LESSONS):
+        p = COURSE / f"lesson-{n}.md"
+        if not p.exists():
+            missing.append(p.name)
+            titles.append(f"Lesson {n}"); times.append(""); mds.append(None)
+            continue
+        md = p.read_text(encoding="utf-8")
+        t, tm = parse_lesson_meta(md, f"Lesson {n}")
+        titles.append(t); times.append(tm); mds.append(md)
+    if missing:
+        print(f"  WARNING: missing lesson files: {', '.join(missing)} (pages skipped)")
+
+    for n in range(N_LESSONS):
+        if mds[n] is not None:
+            build_lesson(n, mds[n], titles, times)
+            print(f"  built docs/lesson-{n}.html  ({times[n] or 'no time'})")
+    build_gift()
+    build_colophon(); print("  built docs/colophon.html")
+    build_index(titles, times); print("  built docs/index.html")
+    build_assets()
+    for asset in ("style.css", "quiz.js", "interactions.js"):
+        if not (SITE / asset).exists():
+            print(f"  WARNING: docs/{asset} missing — pages reference it.")
+    print("done.")
+
+
+if __name__ == "__main__":
+    sys.exit(main())

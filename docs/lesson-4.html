@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 4 — Check where the answer came from · Using Clay in Claude Code</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<nav class="top-nav"><div class="top-nav-inner"><a class="brand" href="index.html">Using Clay in Claude Code</a><div class="nav-pills" aria-label="Lessons"><a class="nav-pill" data-lesson="0" href="lesson-0.html" title="Lesson 0">0</a><a class="nav-pill" data-lesson="1" href="lesson-1.html" title="Lesson 1">1</a><a class="nav-pill" data-lesson="2" href="lesson-2.html" title="Lesson 2">2</a><a class="nav-pill" data-lesson="3" href="lesson-3.html" title="Lesson 3">3</a><a class="nav-pill pill-current" data-lesson="4" href="lesson-4.html" title="Lesson 4" aria-current="page">4</a><a class="nav-pill" data-lesson="5" href="lesson-5.html" title="Lesson 5">5</a><a class="nav-pill nav-pill-text" href="gift.html">Starter prompts</a></div></div></nav>
+<main class="lesson">
+<header class="lesson-header">
+<p class="lesson-badges"><span class="badge badge-num">Lesson 4</span> <span class="badge badge-time">6 min</span></p>
+<h1>Lesson 4 — Check where the answer came from</h1>
+</header>
+<article class="lesson-body">
+<h2>Why this matters</h2>
+<p>You already check sources. You look at who wrote the review before you trust the star rating. You click through to the article before you repeat the headline. It takes a few seconds, and it is the difference between knowing something and having heard it.</p>
+<p>Your workflow is the same situation. The answer arrives short and clean: an industry, plus a rating where the researcher says it is "very high" confidence. It reads like something settled. You cannot tell a wrong answer from a right one by looking at it.</p>
+<p>What you have here that a bare answer never gives you is the trail. Clay's AI web researcher keeps the page it visited and the text it read on the way there, and you can open that. This lesson is that habit: read the answer against the question you asked, then read the trail.</p>
+<p>You already built the workflow in Lesson 3, so pointing it at a second and third company is just running it again. Each company gets its own run, and Clay keeps a row for each.</p>
+<h2>See it</h2>
+<p>Three companies, one run each: geico.com, zurichna.com, resourcepro.com. Those are the three I ran, and all three came back Insurance.</p>
+<p>Each run lands as its own row in the workflow's Runs tab, which you see when you open Clay in your browser: status Done, how long it took, and what it cost. Three finished, none failed.</p>
+<figure class="shot"><a href="assets/runs-view-three.png"><img src="assets/runs-view-three.png" loading="lazy" alt="Three runs in the Runs tab, one per company. All Done, each with its own duration and cost."></a><figcaption>Three runs in the Runs tab, one per company. All Done, each with its own duration and cost.</figcaption></figure>
+<p>Open one of those runs. For geico.com, the researcher returned four things:</p>
+<ol>
+<li><strong>The answer.</strong> "Insurance."</li>
+<li><strong>How sure it says it is.</strong> "Very high."</li>
+<li><strong>Its reasoning, in its own words.</strong> <em>"GEICO operates in the insurance industry, offering various insurance products including auto and homeowners insurance. This information was gathered from their official website <a href="https://www.geico.com">geico.com</a>."</em></li>
+<li><strong>The steps it took.</strong> This one holds the actual page it visited, https://www.geico.com, the links it found there, and the text it read off the page.</li>
+</ol>
+<figure class="shot"><a href="assets/run-sources.png"><img src="assets/run-sources.png" loading="lazy" alt="The geico.com run opened up: the answer, the reasoning naming the site it read, the confidence rating, and Steps Taken — the record of where it actually went."></a><figcaption>The geico.com run opened up: the answer, the reasoning naming the site it read, the confidence rating, and Steps Taken — the record of where it actually went.</figcaption></figure>
+<p>The first three are the researcher talking about itself. Only the fourth is evidence you can look at with your own eyes.</p>
+<p>There is one thing to look at before any of those four, and I only learned it because three testers took this course cold and it caught all of them. Their runs on geico.com and zurichna.com came back about who those companies sell to. Nobody had asked that. The step was running a question none of them had set, while still carrying its old name — Lesson 5 covers why that happens and how to stop it.</p>
+<p>Nothing errored, and nothing looked wrong. The check that would have caught it is not a source check.</p>
+<p>So the check has two parts, in this order. First: is this an answer to the question I asked? Then: does the page behind it say the thing? An answer in the wrong shape — who they sell to, when you asked what industry they are in — does not mean the researcher got it wrong. It means the question changed underneath you, and a source check will happily wave it through.</p>
+<p>And about those three matching answers. It is tempting to read three agreeing results as three confirmations. It is one researcher using one method, three times. If the method is off, it is off on all three, and they will still agree with each other.</p>
+<p>Which is why you do not check all of them. You check the one a decision hangs on.</p>
+<h2>Try it</h2>
+<p>You have the Company Research workflow from Lesson 3. Run it twice more, then look inside one answer.</p>
+<ol>
+<li>Open Claude Code. Use geico.com and zurichna.com — those are the two I ran, so you have something to compare against. Two companies off your own Lesson 2 list work just as well; your list will not look like mine, and nothing in this lesson depends on it matching.</li>
+</ol>
+<ol>
+<li>Ask for the runs:</li>
+</ol>
+<p>&gt; Run Company Research on the first company. Then run it again on the second. Show me both answers.</p>
+<p>A run costs about three data credits and two actions, and each one lands as its own row instead of replacing the last. If one does come back failed, ask for it again.</p>
+<ol>
+<li>Open the workflow in Clay and click the Runs tab. Your runs are stacking up, one row each. That list is your record, and it stays there.</li>
+</ol>
+<p>Now pick one of the two runs you just made. Before you look at the answer at all, ask:</p>
+<blockquote><p>Show me the exact question that research step actually ran.</p></blockquote>
+<p>Read it against what you asked for in Lesson 3. If it is not your question, the answer is not yours either, however good it looks. Do not just re-run it — you will get the same wrong-shaped answer at the same cost. Ask for the question back first:</p>
+<blockquote><p>Set the question on that research step back to asking what industry the company is in, then run it again.</p></blockquote>
+<p>Lesson 5 covers why it drifts in the first place.</p>
+<p>If it is your question, now go at the answer:</p>
+<blockquote><p>Show me the reasoning and the sources behind that answer, including the actual page it visited.</p></blockquote>
+<p>What comes back has parts that are not worth the same:</p>
+<div class="table-wrap"><table><thead><tr><th>What it showed you</th><th>What to do with it</th></tr></thead><tbody>
+<tr><td>The answer, and the confidence rating next to it</td><td>Note it and move on. The researcher is grading its own work.</td></tr>
+<tr><td>The reasoning, written out</td><td>Read it, and remember it is still the researcher describing itself.</td></tr>
+<tr><td>The page it visited and the text it read there</td><td>Open this one. Ask whether that page says the thing.</td></tr>
+</tbody></table></div>
+<p>You are done when you can say two things out loud: this is an answer to the question I asked, and the page behind it says the thing. Not whether the reasoning is well written. Those two.</p>
+<p>Watch for the answer that cannot point you to anything. If the researcher has no page to show you, that answer is not necessarily wrong. It is unchecked, which is a different thing. Treat it as unproven until you can see a page behind it.</p>
+<p>One thing you may have noticed while you were doing this. Whichever companies you used, the question was still mine — what industry a company is in was probably never what you actually wanted to know. Lesson 5 swaps it.</p>
+<h2>Check yourself</h2>
+<p>Four questions. Nothing is recorded, and a wrong pick just explains why.</p>
+<h2>Fine print</h2>
+<details>
+<summary>The exact steps, dates, and limits</summary>
+<ul>
+<li>Everything above comes from three live runs on a real Clay account, July 19, 2026: geico.com, zurichna.com and resourcepro.com, each through the same two-step workflow. All three completed, all three returned "Insurance" with confidence "very high."</li>
+<li>Each of those three runs used 3.1 data credits plus 2 actions — the five-or-so credits a run cost you in Lesson 3. That per-run cost held on every one of the nineteen runs behind this course. The timing did not. Runs across this course have come back in as little as seven seconds and taken as long as thirty-four. Do not read a slow run as a stuck one, and do not read a very fast one as a skipped one either — check the sources, not the clock.</li>
+<li>Verified live on July 19, 2026: three testers hit runs whose research step was executing a question other than the one it was named for. That is why the question check comes before the source check. Lesson 5 covers the cause.</li>
+<li>On the geico.com run, the researcher reported its own working time as 7.82 seconds. That is its own count of its working time, not how long the run took. Its recorded steps contained the visited URL https://www.geico.com along with the links found on that page and the page text it read. That record is what makes the source checkable rather than a claim about a source.</li>
+<li>Running things this way does not cost extra. Clay charges the same credits and actions as the equivalent work done inside Clay's own interface (Clay docs: clay-api-cli, checked Jul 18, 2026).</li>
+<li>Clay's Agent Plugin is in open beta, and the workflow part is newer and rougher than the rest of it, so an occasional run failing or stalling is normal rather than a sign you built it wrong (Clay docs: clay-api-cli, checked Jul 18, 2026). Re-running is the fix.</li>
+</ul>
+</details>
+</article>
+<section class="quiz-section" id="quiz">
+<h2>Check yourself</h2>
+<div id="quiz-root" data-lesson="4"></div>
+<script type="application/json" id="quiz-data">{"lesson": 4, "items": [{"q": "Your workflow returns \"Insurance\" for a company and marks its own confidence as \"very high.\" Which of these actually gives you a reason to believe the answer?", "options": [{"text": "The confidence rating. It said very high, and it was right about the last three.", "correct": false, "why": "The confidence rating is the researcher grading its own work, so a wrong answer can carry a high rating just as easily. It is useful as a flag, not as evidence."}, {"text": "That the run finished in well under a minute with no errors.", "correct": false, "why": "Speed and a clean finish tell you the workflow ran, which is worth knowing. They say nothing about whether what came back is true."}, {"text": "The page it visited and the text it read there.", "correct": true, "why": "That is the only piece you can look at yourself. The answer, the rating, and the reasoning are all the researcher describing itself; the visited page is the thing that either backs it up or doesn't."}]}, {"q": "You run the workflow on three companies and all three come back \"Insurance.\" What has that agreement earned you?", "options": [{"text": "Not much on its own. You still open the sources on the answer you plan to use.", "correct": true, "why": "Agreement is a comfort, not a check. Three answers matching is worth less to you than one answer whose page you actually opened."}, {"text": "Three independent confirmations, so the answers are solid.", "correct": false, "why": "They look independent because they are three companies, but it is one researcher using one method three times. If the method has a blind spot, all three answers share it."}, {"text": "Enough evidence that the industry answers are reliable and you can stop checking.", "correct": false, "why": "Three cheap answers agreeing is thin evidence for a fourth one, because they all came from the same method. The check that pays is on the answer you are about to use."}]}, {"q": "You have ten answers back and time to properly check one. Which do you open?", "options": [{"text": "The one with the lowest confidence rating.", "correct": false, "why": "A fair instinct, and worth a glance. But a shaky answer on a company you will never contact costs you nothing, so low confidence alone isn't what makes an answer worth your time."}, {"text": "A random one, as a spot check on the batch.", "correct": false, "why": "Sampling is a real technique and it earns its place once you are running hundreds. With ten answers in front of you, going straight to the one driving a decision is the better use of the same minute."}, {"text": "The one you are about to act on.", "correct": true, "why": "Checking follows the decision, not the score. The answer feeding a real next step is where a mistake actually costs you something."}]}, {"q": "A run finishes clean, marks itself \"very high\" confidence, and shows you a real page you can open. The answer tells you who the company sells to. You asked what industry it is in. What is going on?", "options": [{"text": "The question the step ran is not the question you wrote, so go look at the question before you look at the answer.", "correct": true, "why": "An answer in the wrong shape is a question problem, not an accuracy problem. Ask Claude Code to show you the exact question the step ran; if it is not yours, Lesson 5 is where you take it."}, {"text": "The researcher misread the site, so run it again.", "correct": false, "why": "Nothing misfired. The run did exactly what it was told, and it was told something other than what you asked, so running it again buys you the same wrong-shaped answer at the same cost."}, {"text": "Close enough \u2014 who a company sells to tells you roughly what industry it is in.", "correct": false, "why": "It doesn't, and that is the trap. This is the one case where the source check passes and the answer is still unusable, because the page really does back up the answer to a question you never asked."}]}]}</script>
+</section>
+<nav class="lesson-nav"><a class="nav-prev" href="lesson-3.html">&larr; Lesson 3</a><a class="nav-next" href="lesson-5.html">Lesson 5 &rarr;</a></nav>
+<footer class="site-footer">
+<p class="banner">Every Clay fact here was run live on a real Clay account on July 19, 2026. Clay ships weekly — check the current docs before relying on any limit.</p>
+<div class="feedback">
+<a class="feedback-link" href="https://forms.gle/2iZnLKvbZJThkieP9" target="_blank" rel="noopener">Suggest a fix or tell me what broke &rarr;</a>
+</div>
+<p><a href="colophon.html">How this course was built</a> &middot; <a href="index.html">Course home</a></p>
+</footer>
+</main>
+<script src="quiz.js"></script>
+<script src="interactions.js"></script>
+</body>
+</html>

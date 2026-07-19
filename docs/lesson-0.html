@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 0 — Open Claude Code · Using Clay in Claude Code</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<nav class="top-nav"><div class="top-nav-inner"><a class="brand" href="index.html">Using Clay in Claude Code</a><div class="nav-pills" aria-label="Lessons"><a class="nav-pill pill-current" data-lesson="0" href="lesson-0.html" title="Lesson 0" aria-current="page">0</a><a class="nav-pill" data-lesson="1" href="lesson-1.html" title="Lesson 1">1</a><a class="nav-pill" data-lesson="2" href="lesson-2.html" title="Lesson 2">2</a><a class="nav-pill" data-lesson="3" href="lesson-3.html" title="Lesson 3">3</a><a class="nav-pill" data-lesson="4" href="lesson-4.html" title="Lesson 4">4</a><a class="nav-pill" data-lesson="5" href="lesson-5.html" title="Lesson 5">5</a><a class="nav-pill nav-pill-text" href="gift.html">Starter prompts</a></div></div></nav>
+<main class="lesson">
+<header class="lesson-header">
+<p class="lesson-badges"><span class="badge badge-num">Lesson 0</span> <span class="badge badge-time">4 min</span></p>
+<h1>Lesson 0 — Open Claude Code</h1>
+</header>
+<article class="lesson-body">
+<h2>Why this matters</h2>
+<p>The name stops people. "Claude Code" sounds like something built for engineers, and plenty of people who would get real use out of it never open it once for that reason alone.</p>
+<p>Claude Code is an app you type plain English into, the same way you type into ChatGPT. There is one difference, and it is the only one that matters: it can go and do things in other tools for you.</p>
+<p>Here is what that buys you. By the end of these six lessons you will have built a small saved workflow that researches companies for you and keeps the sources behind every answer, and you will not have written a line of code. It lives in your Clay account and you can run it again tomorrow. Clay itself is a smart spreadsheet that finds companies and people and fills in facts about them. What you are building is one of the moving parts inside it, not the spreadsheet.</p>
+<p>Before you spend six lessons on this, one thing you should hear from me and not find out at lesson four. Clay's Agent Plugin, the piece that lets Claude Code reach into Clay, is in open beta, and Clay limits parts of it by plan.</p>
+<p>The main thing you cannot do is build a spreadsheet-style table. Clay has not opened table building to this route. That is on Clay's side, so no rephrasing will get you past it. Everything you build in this course works without a table.</p>
+<h2>See it</h2>
+<p>You do not learn commands to use this. You type a sentence and it answers. Then you type another one.</p>
+<p>Two examples.</p>
+<p>You type:</p>
+<blockquote><p>I want to build a personal budget tracker. What would I need?</p></blockquote>
+<p>It answers you in plain sentences. Nothing surprising there. Any chat tool does that.</p>
+<figure class="shot shot-inline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" role="img" aria-label="Illustration of a chat-style interface: a typed question in plain English and a reply written in ordinary sentences, with a message box at the bottom.">
+  <defs>
+    <style>
+      .win   { fill: #ffffff; stroke: #d8dcdf; stroke-width: 1; }
+      .bar   { fill: #f2f2ee; }
+      .ink   { fill: #1b2126; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 15px; }
+      .mut   { fill: #5a656e; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 13px; }
+      .you   { fill: #eef3f0; stroke: #dbe5df; stroke-width: 1; }
+      .field { fill: #ffffff; stroke: #d8dcdf; stroke-width: 1; }
+      .lbl   { fill: #14804a; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="719" height="429" rx="12" class="win"/>
+  <path d="M0.5 12.5A12 12 0 0 1 12.5 0.5h695A12 12 0 0 1 719.5 12.5V44H0.5Z" class="bar"/>
+  <circle cx="24" cy="22" r="5" fill="#e0655f"/>
+  <circle cx="42" cy="22" r="5" fill="#e0b45f"/>
+  <circle cx="60" cy="22" r="5" fill="#63b96b"/>
+
+  <text x="88" y="27" class="mut">a window you type into</text>
+
+  <text x="36" y="82" class="lbl">YOU</text>
+  <rect x="36" y="94" width="500" height="42" rx="10" class="you"/>
+  <text x="52" y="121" class="ink">I want to build a personal budget tracker. What would I need?</text>
+
+  <text x="36" y="180" class="lbl">IT ANSWERS</text>
+  <text x="36" y="212" class="ink">You would need three things: a place to record what comes in, a</text>
+  <text x="36" y="238" class="ink">place to record what goes out, and a way to group spending into</text>
+  <text x="36" y="264" class="ink">categories so you can see where the money actually went.</text>
+  <text x="36" y="296" class="ink">Want me to start one for you?</text>
+
+  <rect x="36" y="336" width="648" height="52" rx="12" class="field"/>
+  <text x="56" y="367" class="mut">Type a message…</text>
+  <circle cx="654" cy="362" r="15" fill="#14804a"/>
+  <path d="M654 355.5v13M648.5 361l5.5-5.5 5.5 5.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="36" y="414" class="mut">No code anywhere. You write a sentence; it writes back.</text>
+</svg><figcaption>An illustration of the shape of it: you type a sentence, it answers in sentences. That is the whole interface.</figcaption></figure>
+<p>Then you type:</p>
+<blockquote><p>Create a Clay workflow called "Company Research." Add a step that takes a company's website and tells me what industry the company is in. Then run it on geico.com.</p></blockquote>
+<p>That one does not come back as an explanation of how you might do it. Claude Code builds the thing inside your Clay account, runs it, and hands you the answer about the company. That is Lesson 3, and it is why you are using this app rather than asking a chatbot about Clay.</p>
+<p>Claude Code opens inside a terminal window, which is the plain window your computer already has for typing instructions into. Once Claude Code is running in it, that window behaves like a chat.</p>
+<h2>Try it</h2>
+<p>By the end of this you will have Claude Code open on your machine and one answer on the screen. No Clay yet.</p>
+<p>The four minutes on this lesson is reading time. The install takes however long it takes on your connection, and you only do it once.</p>
+<p>Claude Code is Anthropic's own app. Anthropic's Claude Code documentation is where the install steps, the systems it supports, and the Claude plans that include access are kept current, so start there rather than from a copy of those details written down here months ago.</p>
+<ol>
+<li>Open a terminal. On a Mac, press <code>Cmd + Space</code>, type <code>Terminal</code>, and press Enter. On Linux, search your applications for Terminal. A window opens with a blinking cursor.</li>
+</ol>
+<ol>
+<li>Install Claude Code by following Anthropic's instructions for your system. Text will scroll past while it works, and the installer tells you when it has finished. If it stops with an error instead, copy the error text and search it — nothing has broken, and running the install a second time costs you nothing but a minute.</li>
+</ol>
+<ol>
+<li>Type <code>claude</code> and press Enter. The first time you do this it will walk you through signing in to your Claude account. Follow what it asks.</li>
+</ol>
+<ol>
+<li>Ask it something. Pick one of these, or write your own question the way you would ask a knowledgeable friend:</li>
+</ol>
+<p>&gt; what can Claude Code do?</p>
+<p>&gt; I want to build a personal budget tracker. What would I need?</p>
+<p>Read the answer. It comes back in ordinary sentences, and there is no code in it anywhere.</p>
+<p>Asking a question does not change a single file on your computer, so ask as many as you want until the window stops feeling strange. When you are done, close the window.</p>
+<h2>Check yourself</h2>
+<h2>Fine print</h2>
+<details>
+<summary>The exact steps, dates, and limits</summary>
+<ul>
+<li>Claude Code is Anthropic's app. Its install steps, supported systems, and the Claude plans that include access are documented by Anthropic and change over time — check Anthropic's Claude Code documentation for the current version rather than trusting a copy here. Start a session by typing <code>claude</code>.</li>
+<li>Clay's Agent Plugin is in open beta. Clay's CLI and API are supported on Mac and Linux; Windows is not supported in open beta (Clay docs: clay-api-cli, checked Jul 18, 2026). Lesson 1 covers what that means for you.</li>
+<li>Clay's documentation states there are no current plans to support building tables through the developer platform, and that reading structured data from existing Clay tables is available on Enterprise plans only (Clay docs: clay-api-cli, checked Jul 18, 2026).</li>
+<li>The Agent Plugin open beta is available on all modern Clay plans and, for a limited time, on legacy plans through the end of 2026 (Clay docs: clay-api-cli, checked Jul 18, 2026).</li>
+</ul>
+</details>
+</article>
+<section class="quiz-section" id="quiz">
+<h2>Check yourself</h2>
+<div id="quiz-root" data-lesson="0"></div>
+<script type="application/json" id="quiz-data">{"lesson": 0, "items": [{"q": "What separates Claude Code from a normal chat window?", "options": [{"text": "The answers it writes are more detailed.", "correct": false, "why": "Answer quality is not the split. Both write you sentences. The one that matters is that Claude Code can act in other tools, which is exactly what you will point at Clay."}, {"text": "It can act inside other tools.", "correct": true, "why": "You give permission, it does the thing. Every lesson after this one leans on that single capability."}, {"text": "It only works on files you have already uploaded to it.", "correct": false, "why": "There is no uploading step. It works with what is on your machine and with tools you connect to it, which is how Clay enters the picture in Lesson 1."}]}, {"q": "You open a terminal window, type `claude`, and press Enter. What is that window like from then on?", "options": [{"text": "You have to learn terminal commands before you can ask it anything.", "correct": false, "why": "No commands to learn. You write the way you would write to a person who already knows the tools."}, {"text": "You type messages and read replies, the same as any chat.", "correct": true, "why": "The window stops being a place for commands and becomes a conversation. That is the whole interface for this course, and it is why nothing here looks like programming."}, {"text": "It takes one question and then closes.", "correct": false, "why": "It stays open and keeps the thread, so you can follow up. Asking questions changes nothing on your computer, which makes it a cheap place to poke around."}]}, {"q": "Later on you find you cannot get Clay to build you a spreadsheet-style table this way. What is actually happening?", "options": [{"text": "Claude Code is not capable enough for that job.", "correct": false, "why": "The app is not the thing saying no here. The refusal comes from Clay, and telling those two apart saves you a lot of guessing later."}, {"text": "Clay does not offer table building through this route.", "correct": true, "why": "It is Clay's boundary, set on Clay's side. What you build instead is the thing this course is about, and it works without a table."}, {"text": "You phrased the request badly and a better prompt would work.", "correct": false, "why": "Good instinct in general, and it is the wrong lever here. When the tool itself has drawn the line, rewriting the sentence cannot move it, so the useful skill is spotting which side a limit sits on."}]}]}</script>
+</section>
+<nav class="lesson-nav"><a class="nav-prev" href="index.html">&larr; Course home</a><a class="nav-next" href="lesson-1.html">Lesson 1 &rarr;</a></nav>
+<footer class="site-footer">
+<p class="banner">Every Clay fact here was run live on a real Clay account on July 19, 2026. Clay ships weekly — check the current docs before relying on any limit.</p>
+<div class="feedback">
+<a class="feedback-link" href="https://forms.gle/2iZnLKvbZJThkieP9" target="_blank" rel="noopener">Suggest a fix or tell me what broke &rarr;</a>
+</div>
+<p><a href="colophon.html">How this course was built</a> &middot; <a href="index.html">Course home</a></p>
+</footer>
+</main>
+<script src="quiz.js"></script>
+<script src="interactions.js"></script>
+</body>
+</html>
