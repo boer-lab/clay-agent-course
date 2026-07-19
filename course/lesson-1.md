@@ -16,13 +16,13 @@ The three doors, shortest version:
 2. **The Clay connector.** Clay inside a chat tool like Claude. You type "find me people at this company" in a normal conversation and Clay answers you there. You ask, it answers. You do not build anything.
 3. **The Clay Agent Plugin.** Clay inside Claude Code. You ask in plain English, and it builds and runs real things in your Clay account that stay there afterward.
 
-This course is door three.
+This course is door #3.
 
 MCP stands for Model Context Protocol. It is the shared plug standard these doors use underneath, so an AI tool can reach an outside service like Clay.
 
-That is the last time this course explains it. You will see it in Clay's own course titles, "Clay MCP for Reps" and "Clay MCP for Ops", and both of those are about door two, the chat one. If you go searching and land there, you will be in the right place for the other door.
+That is the last time this course explains it. You will see it in Clay's own course titles, "Clay MCP for Reps" and "Clay MCP for Ops", and both of those are about door #2, the chat one. If you go searching and land there, you will be in the right place for the other door.
 
-You do not install door three by hand. There is nothing to download and no settings to get wrong. Clay's docs tell you to paste one line into your coding agent:
+You do not have to install Clay Agent Plugin by hand. There is nothing to download and no settings to get wrong. Clay's docs tell you to paste one line into your coding agent:
 
 > Set up the Clay plugin by following the steps in https://github.com/clay-run/agent-plugins
 
@@ -37,11 +37,11 @@ Once it says it is done, you ask it which Clay account it is in. Here is what ca
 ```
 {
   "user": {
-    "id": "<a number>",
-    "name": "Boer Chen"
+    "id": "<your user id>",
+    "name": "your username"
   },
   "workspace": {
-    "id": "<a number>"
+    "id": "<your workspace id>"
   }
 }
 ```
