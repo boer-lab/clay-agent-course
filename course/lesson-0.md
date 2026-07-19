@@ -1,4 +1,4 @@
-# Lesson 0 — Open Claude Code
+# Lesson 0 — Before You Begin
 
 **Time:** 4 min
 
