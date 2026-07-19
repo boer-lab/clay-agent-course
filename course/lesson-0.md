@@ -10,9 +10,13 @@ Claude Code is an app you type plain English into, the same way you type into Ch
 
 Here is what that buys you. By the end of these six lessons you will have built a small saved workflow that researches companies for you and keeps the sources behind every answer, and you will not have written a line of code. It lives in your Clay account and you can run it again tomorrow. Clay itself is a smart spreadsheet that finds companies and people and fills in facts about them. What you are building is one of the moving parts inside it, not the spreadsheet.
 
-Before you spend six lessons on this, one thing you should hear from me and not find out at lesson four. Clay's Agent Plugin, the piece that lets Claude Code reach into Clay, is in open beta, and Clay limits parts of it by plan.
+Before you spend six lessons on this, two things you should hear from me now rather than work out later.
 
-The main thing you cannot do is build a spreadsheet-style table. Clay has not opened table building to this route. That is on Clay's side, so no rephrasing will get you past it. Everything you build in this course works without a table.
+The first is what this course is actually teaching. It is not teaching you Clay. It is teaching you how to ask Claude Code for something and get a real result back, and a workflow happens to be the thing we build while you learn that. If you asked a Clay expert where a beginner should start, most of them would say start in Clay's own spreadsheet, and they would be right. We are not starting there because the piece that connects Claude Code to Clay cannot build one. It builds workflows. So that is what we build.
+
+The second follows from the first. That connecting piece, Clay's Agent Plugin, is in open beta. It does a narrow set of things well today and it will do more later, which means the shape of this course is a snapshot rather than a rule. The main thing it cannot do right now is build a spreadsheet-style table. That is Clay's line, not Claude Code falling short, and no rephrasing gets you past it. Nothing in this course needs a table.
+
+Read it that way and the limits stop feeling like walls. You are learning the asking, not the tool.
 
 ## The shape of it
 

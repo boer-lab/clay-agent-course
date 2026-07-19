@@ -36,14 +36,20 @@ guessing.
 
 These are the ones that cost hours, in order of how much they cost.
 
-**The research question is shared across the workspace, not owned by your workflow.**
-A claygent tool node carries a `toolId`. The mission text lives on that shared tool object, and a
-newly created node **auto-binds to a pre-existing tool** rather than getting its own copy. So
-editing the question in one workflow can silently rewrite it in another. Nothing errors. The run
-completes, reports high confidence, and returns real sources that genuinely support the answer —
-just not to the question you asked. Passing `mission` as a run-time input does **not** override it.
+**Two claygent nodes share one question. You cannot build a two-question research workflow.**
+A claygent tool node carries a `toolId`, and the mission text lives on that shared tool object. A
+newly created node **auto-binds to a pre-existing tool** rather than getting its own copy, so
+creating a second research step silently rewrites the first one's mission. Tested: a workflow with
+steps named "Industry" and "Who they sell to", each created with its own mission, ran the *same*
+question twice and charged twice. Passing `mission` as a run-time input does **not** override it.
 Read `stepInputs.mission` off a finished run to know what actually executed; the node's saved config
 can differ from what ran.
+**The fix: for a second fact, use a `clay_function` node, not a second claygent.** Different tool
+type, own config, no collision. Verified: claygent -> "Financial Services", then Enrich Company ->
+name, size, type, founded, location, LinkedIn URL. A node's `toolType` cannot be changed after
+creation — delete and recreate.
+Running the SAME workflow repeatedly changes nothing. Config only drifts when a NEW claygent node is
+created.
 
 **`runs get` and `runs steps` need BOTH ids.**
 ```
@@ -103,12 +109,31 @@ fields are:
 | `stepsTaken` | the pages it actually visited and the text it read — **the only checkable part** |
 | `timeTakenInSeconds` | its working time, not the run's wall time |
 
-Runs completed in seven to thirty-four seconds across everything tested, at 3.1 data credits plus
+Runs completed in fourteen to thirty-four seconds of wall time across everything tested, at 3.1 data credits plus
 2 action credits each. A failed run still costs about 0.1 data credits and 1 action.
 
 **Node types:** `agent`, `tool`, `code`, `conditional`.
-**Trigger types:** run manually, on webhook call, on a schedule, audience member added, audience on
-a schedule, on CSV upload.
+
+**Triggers, and what each one hands the workflow.** All creatable from the plugin via
+`surfaces_edit_trigger`, which requires a `workflowId`:
+
+| Trigger | Gives the run |
+| --- | --- |
+| `manual` | whatever you pass with `--input` |
+| `scheduled` | **nothing — Clay's word is "contextless"**, so a workflow that needs a domain will fire empty |
+| `audience_scheduled` | reruns every member of an audience segment on a schedule |
+| `csv_upload` | one run per row (the file upload itself is UI-only) |
+| `webhook` | the POST payload; needs an `inputSchema` |
+| `audience_segment` | fires on membership change |
+| `clay_table` | read-only here; created from the Clay tables UI |
+
+**A function cannot be scheduled on its own.** `clay functions` has only `list`; `clay routines` has
+no schedule option; every trigger requires a `workflowId`. A function is a step, a workflow is the
+thing with a clock. To run enrichment on a schedule, put the function in a workflow and schedule
+that.
+
+**CRM is reachable:** 35 CRM actions in the catalog, including `hubspot-create-object`,
+`salesforce-lookup-record-v2`, `attio-create-record`, `pipedrive-oauth-create-person`.
 
 ---
 

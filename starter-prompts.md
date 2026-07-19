@@ -88,15 +88,14 @@ That returned an error, read it and tell me what happened.
 
 Clay's errors usually name the fix. A retry costs a credit or two, not nothing.
 
-### When the answer does not match the question
+### When you want to see the question that actually ran
 
 ```
-Show me the exact question my research step actually ran. If it is not
-______, set it back to that and run it again.
+Show me the exact question that research step is running.
 ```
 
-This is the failure that does not announce itself. Nothing errors, and a source check will wave it
-through. Reading the question back is the only way to catch it.
+Handy when an answer comes back in a shape you did not expect. The run records the question it
+used, and that is the ground truth.
 
 ## What this route will and will not do
 
@@ -121,10 +120,9 @@ before you lean on it.
 
 **Worth knowing:**
 
-- The question you set does not live inside your workflow. It lives in a setting Clay shares across
-  your whole workspace, so changing it in one place can change it somewhere else. Lesson 5 explains
-  why it happens; the prompt above is how you catch it. After changing a question, read it back off
-  the finished run rather than off the step's settings — the run tells you what actually executed.
+- One AI researcher step per workflow. A second one does not get its own question — the two share a
+  setting, so both end up asking whichever was set last. When you want a second fact about a
+  company, add one of the ready-made enrichments instead.
 - Search results are capped per request and per month, and the monthly cap is easier to hit than you
   expect. Spend it on companies you do not already have — if you already have a list of websites,
   hand it straight to the workflow instead. Running into the cap gives you an error naming your

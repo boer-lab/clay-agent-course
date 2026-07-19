@@ -37,10 +37,6 @@ Sources      aflac.com, then a web search for Aflac's business model
 
 Notice what it did not do. Aflac genuinely sells both ways, and the answer says so instead of picking a side to sound decisive. Notice too what the confidence rating is worth: run the same question again and that rating moves around. It is the researcher grading its own work, which is exactly why Lesson 4 had you go look at the page instead. It found the "Business Owners" link on Aflac's own site, and you can go open that yourself.
 
-One small thing about where that question lives. It is not a private copy sitting inside your workflow. It is a setting Clay keeps in your workspace, and research steps share it. With one workflow and one research step, which is where you are now, that never comes up. Once you have a second of either, changing the question in one place can change it in the other.
-
-That is easy enough to stay ahead of. After you change the question, run it, and read the question back off the finished run rather than off the step's settings. The settings say what is saved; the run says what actually went out. You know what that sentence looks like — it is the one printed at the top of this lesson — so ask for it and read it.
-
 Anything a person could work out by reading a company's public pages is fair game: what they sell, who they sell to, whether they mention a particular product, which markets they list. If the answer is not published anywhere, no wording will get it out of there.
 
 Two limits are worth knowing before you go off on your own. This path does not build spreadsheet-style tables, and Clay has said plainly that it is not planning to. And the Agent Plugin is in open beta, with workflows the newest part of it, so small things will change under you.
@@ -129,7 +125,7 @@ Start with how a workflow starts. It does not have to be you pressing Run. It ca
 - when someone new is added to a saved list of people in Clay, which Clay calls an audience
 - when a spreadsheet file is uploaded, the kind that ends in .csv
 
-A workflow can also hold more than two steps, split down different paths depending on what an answer comes back as, and run code.
+A workflow can also hold more steps, split down different paths depending on what an answer comes back as, and run code. One thing to know if you go adding steps: a second AI researcher step will not give you a second question. The two share one, so both end up asking whichever was set last. When you want a second fact, reach for a ready-made step instead.
 
 And the AI researcher is not your only option for filling in a fact about a company. Clay keeps nineteen steps already built, each one made to go get a single specific thing. Clay calls these enrichments, and you ask for them by name. Useful ones to know about:
 
@@ -143,6 +139,16 @@ And the AI researcher is not your only option for filling in a fact about a comp
 A named enrichment is cheaper than asking the researcher to go find the same thing, and it comes back the same way every time. The full list of nineteen is on the cheatsheet that comes with this course.
 
 None of that is a new skill. Each one is the same move you already made: say what you want in a sentence and check what came back.
+
+Put the pieces together and it looks like this.
+
+Imagine part of your job is keeping the sales team's account list current. Every Monday you would otherwise open twenty tabs and work out which of your accounts have started hiring, then type what you found somewhere the team will see it.
+
+Instead you describe that once, in the terminal. Take my saved list of target accounts. Every Monday morning, look up each one's job openings, ask the researcher whether that hiring looks like they are moving into a new market, and put what it finds into our CRM against the right account.
+
+Claude Code builds it. From then on it runs on Monday whether you are there or not, and the answers are waiting when you get in. You never opened Clay.
+
+That is the whole idea this course was pointing at. You are not learning a tool. You are learning to say what you want to something that can go and do it.
 
 What you built is small. One workflow and a handful of runs.
 

@@ -8,7 +8,7 @@ You already check sources. You look at who wrote the review before you trust the
 
 Your workflow is the same situation. The answer arrives short and clean: an industry, plus a rating where the researcher says it is "very high" confidence. It reads like something settled. You cannot tell a wrong answer from a right one by looking at it.
 
-What you have here that a bare answer never gives you is the trail. Clay's AI web researcher keeps the page it visited and the text it read on the way there, and you can open that. This lesson is that habit: read the answer against the question you asked, then read the trail.
+What you have here that a bare answer never gives you is the trail. Clay's AI web researcher keeps the page it visited and the text it read on the way there, and you can open that. This lesson is that habit.
 
 You already built the workflow in Lesson 3, so pointing it at a second and third company is just running it again. Each company gets its own run, and Clay keeps a row for each.
 
@@ -31,10 +31,6 @@ Open one of those runs. For geico.com, the researcher returned four things:
 
 The first three are the researcher talking about itself. Only the fourth is evidence you can look at with your own eyes.
 
-A finished run also records the question the research step actually used. Read that first, against the question you sent in Lesson 3, and then read the trail.
-
-The order is worth keeping. An answer in the wrong shape, who a company sells to when you asked what industry it is in, does not mean the researcher got it wrong. It means the question changed, and Lesson 5 covers how that happens. A source check on its own passes it, because the page really does back up the answer to whatever question ran.
-
 And about those three matching answers. It is tempting to read three agreeing results as three confirmations. It is one researcher using one method, three times. If the method is off, it is off on all three, and they will still agree with each other.
 
 Which is why you do not check all of them. You check the one a decision hangs on.
@@ -53,15 +49,7 @@ You have the Company Research workflow from Lesson 3. Run it twice more, then lo
 
 3. Open the workflow in Clay and click the Runs tab. Your runs are stacking up, one row each. That list is your record, and it stays there.
 
-Now pick one of the two runs you just made. Start with the question rather than the answer:
-
-> Show me the exact question that research step actually ran.
-
-Read it against the question you sent in Lesson 3. If it does not match, ask for yours back before running it again:
-
-> Set the question on that research step back to asking what industry the company is in, then run it again.
-
-Lesson 5 covers why it can differ. If it matches, go at the answer:
+Now pick one of the two runs you just made and go at the answer:
 
 > Show me the reasoning and the sources behind that answer, including the actual page it visited.
 
@@ -73,7 +61,7 @@ What comes back has parts that are not worth the same:
 | The reasoning, written out | Read it, and remember it is still the researcher describing itself. |
 | The page it visited and the text it read there | Open this one. Ask whether that page says the thing. |
 
-You are done when you can say two things out loud: this is an answer to the question I asked, and the page behind it says the thing. Not whether the reasoning is well written. Those two.
+You are done when you can say it out loud: the page behind this answer says the thing. Not whether the reasoning is well written. That.
 
 Watch for the answer that cannot point you to anything. If the researcher has no page to show you, that answer is not necessarily wrong. It is unchecked, which is a different thing. Treat it as unproven until you can see a page behind it.
 
@@ -81,7 +69,7 @@ One thing you may have noticed while you were doing this. Whichever companies yo
 
 ## Check yourself
 
-Four questions. Nothing is recorded, and a wrong pick just explains why.
+Three questions. Nothing is recorded, and a wrong pick just explains why.
 
 ```quiz-json
 {"lesson": 4, "items": [
@@ -99,11 +87,6 @@ Four questions. Nothing is recorded, and a wrong pick just explains why.
     {"text": "The one with the lowest confidence rating.", "correct": false, "why": "A fair instinct, and worth a glance. But a shaky answer on a company you will never contact costs you nothing, so low confidence alone isn't what makes an answer worth your time."},
     {"text": "A random one, as a spot check on the batch.", "correct": false, "why": "Sampling is a real technique and it earns its place once you are running hundreds. With ten answers in front of you, going straight to the one driving a decision is the better use of the same minute."},
     {"text": "The one you are about to act on.", "correct": true, "why": "Checking follows the decision, not the score. The answer feeding a real next step is where a mistake actually costs you something."}
-  ]},
-  {"q": "A run finishes clean, marks itself \"very high\" confidence, and shows you a real page you can open. The answer tells you who the company sells to. You asked what industry it is in. What is going on?", "options": [
-    {"text": "The question the step ran is not the question you wrote, so go look at the question before you look at the answer.", "correct": true, "why": "An answer in the wrong shape is a question problem, not an accuracy problem. Ask Claude Code to show you the exact question the step ran; if it is not yours, Lesson 5 is where you take it."},
-    {"text": "The researcher misread the site, so run it again.", "correct": false, "why": "Nothing misfired. The run did exactly what it was told, and it was told something other than what you asked, so running it again buys you the same wrong-shaped answer at the same cost."},
-    {"text": "Close enough — who a company sells to tells you roughly what industry it is in.", "correct": false, "why": "It doesn't, and that is the trap. This is the one case where the source check passes and the answer is still unusable, because the page really does back up the answer to a question you never asked."}
   ]}
 ]}
 ```
@@ -115,7 +98,6 @@ Four questions. Nothing is recorded, and a wrong pick just explains why.
 
 - Everything above comes from three live runs on a real Clay account, July 19, 2026: geico.com, zurichna.com and resourcepro.com, each through the same two-step workflow. All three completed, all three returned "Insurance" with confidence "very high."
 - Each of those three runs used 3.1 data credits plus 2 actions — the five-or-so credits a run cost you in Lesson 3. That per-run cost held on every one of the nineteen runs behind this course. The timing did not: across those nineteen runs the fastest finished in fourteen seconds and the slowest took thirty-four, averaging about twenty-two. Do not read a slow run as a stuck one. Note that this is the run's own clock, which is not the same as the researcher's "time taken" figure above — that one counts only its own working time and is always the smaller number.
-- Verified live on July 19, 2026: a finished run records the question its research step actually used, and that question can differ from the one the step is named for. Lesson 5 covers the cause.
 - On the geico.com run, the researcher reported its own working time as 7.82 seconds. That is its own count of its working time, not how long the run took. Its recorded steps contained the visited URL https://www.geico.com along with the links found on that page and the page text it read. That record is what makes the source checkable rather than a claim about a source.
 - Running things this way does not cost extra. Clay charges the same credits and actions as the equivalent work done inside Clay's own interface (Clay docs: clay-api-cli, checked Jul 18, 2026).
 - Clay's Agent Plugin is in open beta, and the workflow part is newer and rougher than the rest of it, so an occasional run failing or stalling is normal rather than a sign you built it wrong (Clay docs: clay-api-cli, checked Jul 18, 2026). Re-running is the fix.
