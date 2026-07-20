@@ -25,7 +25,7 @@
 <blockquote><p>Create a Clay workflow called "Company Research." Add a step that takes a company's website and uses Clay's AI web researcher to tell me, in one or two words, what industry the company is in. Then run it on geico.com.</p></blockquote>
 <p>Claude Code creates the workflow, adds the step, and runs it. A few seconds later:</p>
 <pre><code>geico.com  →  Insurance   (confidence: very high)</code></pre>
-<p>That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run usually takes fifteen to thirty seconds and costs a few credits. Credits are the units Clay charges in: every piece of work it does for you spends some, your account comes with an allowance, and one run of this workflow spends about five of them.</p>
+<p>That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run usually takes well under a minute. It also costs you something: Clay charges in two separate units, credits and actions, and one run of this workflow spends about three credits plus two actions. They are counted separately and do not add together.</p>
 <p>You never typed that question, but a question is what ran, and this is it, word for word:</p>
 <pre><code>Visit {{domain}}. In one or two words, what industry is this company in?
 Return only the industry name.</code></pre>
@@ -37,7 +37,7 @@ Return only the industry name.</code></pre>
 <p>And every time you run it, Clay logs the run so you can see what happened:</p>
 <figure class="shot"><a href="assets/runs-view-single.png"><img src="assets/runs-view-single.png" loading="lazy" alt="One run in the Runs tab: Done, how long it took, and what it cost."></a><figcaption>One run in the Runs tab: Done, how long it took, and what it cost.</figcaption></figure>
 <h2>Try it</h2>
-<p>You will build the exact same thing. Nothing here changes anything outside this one workflow, and nothing costs more than a few credits.</p>
+<p>You will build the exact same thing. Nothing here changes anything outside this one workflow, and nothing costs more than a run or two.</p>
 <p>First, what "done" looks like: a workflow named Company Research exists in your Clay account, and running it on a company website returns an industry. That is the whole target.</p>
 <p>One thing you may see and should not read as failure: sometimes the answer comes back with no pages attached to it. That usually means the researcher's search turned up nothing and it answered from what it already knew instead of from a site. The answer may well be right. Nothing behind it has been checked, though, and Lesson 4 is where you learn to tell those two apart.</p>
 <p>Now you:</p>
@@ -51,7 +51,7 @@ Return only the industry name.</code></pre>
 <p>If it stalls or errors, tell Claude Code "that returned an error, read it and tell me what happened" — the error almost always says exactly what to fix, and a retry costs a credit or two rather than nothing.</p>
 <h2>Check yourself</h2>
 <p>Three quick ones. Nothing here is scored.</p>
-<div class="quiz-section" id="quiz-root" data-lesson="3"></div>
+<div class="quiz-section" id="quiz-root" data-lesson="3"><noscript><p class="quiz-noscript">These questions need JavaScript to run. Nothing is scored, so if it is switched off you can safely read on.</p></noscript></div>
 <h2>Fine print</h2>
 <details>
 <summary>The exact steps, dates, and limits</summary>

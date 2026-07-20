@@ -26,7 +26,7 @@ Claude Code creates the workflow, adds the step, and runs it. A few seconds late
 geico.com  →  Insurance   (confidence: very high)
 ```
 
-That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run usually takes fifteen to thirty seconds and costs a few credits. Credits are the units Clay charges in: every piece of work it does for you spends some, your account comes with an allowance, and one run of this workflow spends about five of them.
+That answer is not made up. The researcher visited geico.com, read the site, and reported back — it even keeps the links it used, so you can check its work (that is Lesson 4). A run usually takes well under a minute. It also costs you something: Clay charges in two separate units, credits and actions, and one run of this workflow spends about three credits plus two actions. They are counted separately and do not add together.
 
 You never typed that question, but a question is what ran, and this is it, word for word:
 
@@ -51,7 +51,7 @@ And every time you run it, Clay logs the run so you can see what happened:
 
 ## Try it
 
-You will build the exact same thing. Nothing here changes anything outside this one workflow, and nothing costs more than a few credits.
+You will build the exact same thing. Nothing here changes anything outside this one workflow, and nothing costs more than a run or two.
 
 First, what "done" looks like: a workflow named Company Research exists in your Clay account, and running it on a company website returns an industry. That is the whole target.
 

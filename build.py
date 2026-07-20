@@ -37,13 +37,28 @@ STATIC = REPO / "static"
 N_LESSONS = 6
 
 SITE_TITLE = "Using Clay in Claude Code"
-TAGLINE = ("You do not need to know how to code. "
-           "In six short lessons you build something real in Clay by asking for it in plain English.")
+TAGLINE = ("Clay is a smart spreadsheet that finds companies and people and fills in facts "
+           "about them. You do not need to know how to code to build in it. In six short "
+           "lessons you build something real, by asking for it in plain English.")
 BYLINE = "Boer Chen"
+# Every one of five test readers asked what this costs, and two closed the tab
+# over it. The Claude-side answer is a hard yes-it-costs-money, quoted from
+# Anthropic's own docs, and it belongs above the fold rather than one click in.
+PREREQS_TITLE = "What you need, before you start"
 PREREQS = [
-    ("What you need", "A Mac or a Linux machine. Windows is not supported while Clay's plugin is in open beta."),
-    ("", "A Claude account, for Claude Code."),
-    ("", "A Clay account. Clay's own documentation says this way of working is available on all their plans, including free ones."),
+    "A Mac or a Linux machine. Clay's plugin does not run on Windows while it is in open beta. "
+    "If you are on Windows, Lesson 1 describes a second way into Clay that works in an ordinary "
+    "chat window instead, and costs you nothing to read.",
+    "A paid Claude plan. Anthropic's documentation is blunt about it: Claude Code needs a Pro, "
+    "Max, Team, Enterprise or Console account, and the free Claude.ai plan does not include "
+    "access. This is the one thing here that definitely costs money.",
+    "A Clay account. Clay's documentation says this way of working is available on all their "
+    "plans, including free ones.",
+    "About 25 Clay credits and 16 actions to finish all six lessons. That is measured, not "
+    "estimated: every run in this course cost 3.1 credits plus 2 actions, and the course asks "
+    "you for seven or eight runs. Ask Claude Code what your balance is before you start.",
+    "A terminal window, which your Mac already has. Lesson 0 shows you how to open it. You will "
+    "not type any code into it.",
 ]
 
 BANNER = ("Every Clay fact here was run live on a real Clay account on July 19, 2026. "
@@ -454,7 +469,10 @@ def build_lesson(n, md, titles, times):
         payload = json.dumps(quiz).replace("</", "<\\/")
         content = content.replace(
             QUIZ_MARKER,
-            f'<div class="quiz-section" id="quiz-root" data-lesson="{n}"></div>', 1)
+            f'<div class="quiz-section" id="quiz-root" data-lesson="{n}">'
+            f'<noscript><p class="quiz-noscript">These questions need JavaScript to run. '
+            f'Nothing is scored, so if it is switched off you can safely read on.</p></noscript>'
+            f'</div>', 1)
         quiz_tail = (f'<script type="application/json" id="quiz-data">{payload}</script>')
     else:
         content = content.replace(QUIZ_MARKER, "", 1)
@@ -569,9 +587,8 @@ def build_index(titles, times):
         gift_html = (f'<section class="landing-extras"><p>'
                      f'<a class="sop-link" href="gift.html">{html.escape(GIFT_NAV_LABEL)}</a> — '
                      f"{html.escape(GIFT_BLURB)}</p></section>")
-    prereq_items = "".join(
-        f"<li>{html.escape(t)}</li>" for _, t in PREREQS)
-    prereqs = (f'<section class="prereqs"><h2>{html.escape(PREREQS[0][0])}</h2>'
+    prereq_items = "".join(f"<li>{html.escape(t)}</li>" for t in PREREQS)
+    prereqs = (f'<section class="prereqs"><h2>{html.escape(PREREQS_TITLE)}</h2>'
                f"<ul>{prereq_items}</ul></section>")
     body = f"""<main class="landing">
 <header class="landing-header">
