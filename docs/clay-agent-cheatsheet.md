@@ -39,7 +39,9 @@ These are the ones that cost hours, in order of how much they cost.
 **Two claygent nodes share one question. You cannot build a two-question research workflow.**
 A claygent tool node carries a `toolId`, and the mission text lives on that shared tool object. A
 newly created node **auto-binds to a pre-existing tool** rather than getting its own copy, so
-creating a second research step silently rewrites the first one's mission. Tested: a workflow with
+creating a second research step silently rewrites the first one's mission — and the sharing is
+WORKSPACE-WIDE, so a claygent node in a different workflow overwrites yours too. Confirmed twice
+on separate days. Tested: a workflow with
 steps named "Industry" and "Who they sell to", each created with its own mission, ran the *same*
 question twice and charged twice. Passing `mission` as a run-time input does **not** override it.
 Read `stepInputs.mission` off a finished run to know what actually executed; the node's saved config

@@ -120,9 +120,10 @@ before you lean on it.
 
 **Worth knowing:**
 
-- One AI researcher step per workflow. A second one does not get its own question — the two share a
-  setting, so both end up asking whichever was set last. When you want a second fact about a
-  company, add one of the ready-made enrichments instead.
+- AI researcher steps share one question across your whole workspace, not just within a workflow.
+  Build a second one — in the same workflow or a different one — and both end up asking whichever
+  question was set last, with no warning. When you want a second fact about a company, add one of
+  the ready-made enrichments instead: those get their own settings and do not collide.
 - Search results are capped per request and per month, and the monthly cap is easier to hit than you
   expect. Spend it on companies you do not already have — if you already have a list of websites,
   hand it straight to the workflow instead. Running into the cap gives you an error naming your
