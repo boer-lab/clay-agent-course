@@ -1,6 +1,6 @@
 # Lesson 5 — Make it yours
 
-**Time:** 9 min
+**Time:** 6 min
 
 ## What this gets you
 
@@ -47,8 +47,6 @@ The workflow does one job well: asking the same public-web question about compan
 
 Pick a question you actually want answered, the kind you would otherwise open ten tabs to figure out.
 
-If the new one turns out worse, ask for the industry question back and you are where you started. Credits are not cash, and a retry costs a few of them.
-
 1. Tell Claude Code the new question, in one plain sentence: *"In my Company Research workflow, change the question the research step asks. Instead of the industry, ask [your question]. Then run it on stripe.com and show me the answer."*
 2. Read the answer, then read the reasoning underneath it. Start on stripe.com because you already saw what that company came back as, so you are the one who can catch a wrong answer.
 3. Now your own companies. Hand Claude Code three or four websites you care about and ask it to run the workflow on each. If you do not have a list yet, Lesson 2 is where you get one.
@@ -79,47 +77,11 @@ A run is a few credits, so if the first version comes back mushy, sharpen the qu
 ]}
 ```
 
-**One page to take with you.** Every sentence this course had you say to Claude Code is on a single page, so you are not digging back through the lessons to find the wording. It comes with the course, along with a cheatsheet written for Claude Code itself to read.
+That is the lesson. The workflow is yours, it asks your question, and it will keep
+answering it for as long as you want to run it.
 
-**What else this thing does.** You built the smallest version of this that is worth having: you press Run, it asks one question about one company. The same shape goes a good deal further, and this course does not teach any of it. I am naming it so you know the ceiling is not where you left it.
-
-Start with how a workflow starts. It does not have to be you pressing Run. It can also start:
-
-- on a schedule you set
-- when something calls it over the web, which is a webhook
-- when someone new is added to a saved list of people in Clay, which Clay calls an audience
-- when a spreadsheet file is uploaded, the kind that ends in .csv
-
-A workflow can also hold more steps, split down different paths depending on what an answer comes back as, and run code. One thing to know if you go adding steps: a second AI researcher step will not give you a second question. The two share one, so both end up asking whichever was set last. When you want a second fact, reach for a ready-made step instead.
-
-And the AI researcher is not your only option for filling in a fact about a company. Clay keeps nineteen steps already built, each one made to go get a single specific thing. Clay calls these enrichments, and you ask for them by name. Useful ones to know about:
-
-- Enrich Company
-- Company News
-- Company Job Openings
-- Website Technology Stack
-- Find People at Company
-- Work Email
-
-A named enrichment is cheaper than asking the researcher to go find the same thing, and it comes back the same way every time. The full list of nineteen is on the cheatsheet that comes with this course.
-
-None of that is a new skill. Each one is the same move you already made: say what you want in a sentence and check what came back.
-
-Put the pieces together and it looks like this.
-
-Imagine part of your job is keeping the sales team's account list current. Every Monday you would otherwise open twenty tabs and work out which of your accounts have started hiring, then type what you found somewhere the team will see it.
-
-Instead you describe that once, in the terminal. Take my saved list of target accounts. Every Monday morning, look up each one's job openings, ask the researcher whether that hiring looks like they are moving into a new market, and put what it finds into our CRM against the right account.
-
-Claude Code builds it. From then on it runs on Monday whether you are there or not, and the answers are waiting when you get in. You never opened Clay.
-
-That is the whole idea this course was pointing at. You are not learning a tool. You are learning to say what you want to something that can go and do it.
-
-What you built is small. One workflow and a handful of runs.
-
-The way in is a sentence. Most people who are nervous about this never find that out, because they decide early that it belongs to engineers and go read about it instead of opening it.
-
-The question sitting in your research step will probably be the wrong question a month from now. That is fine, and it is the point. Open Claude Code, tell it what you want to ask instead, and run it again.
+Lesson 6 is shorter and hands-off: what else this same shape can do, so you know where
+the ceiling actually is.
 
 ## Fine print
 

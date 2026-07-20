@@ -21,6 +21,37 @@
     }
   }
 
+
+  // Reading progress under the sticky nav. Purely decorative, so it is built in
+  // JS rather than shipped in the markup - with scripting off there is simply no
+  // bar rather than an empty one sitting there forever.
+  onReady(function () {
+    var nav = document.querySelector(".top-nav");
+    if (!nav) return;
+    var bar = document.createElement("div");
+    bar.className = "read-progress";
+    bar.setAttribute("aria-hidden", "true");
+    nav.appendChild(bar);
+
+    // Painted straight from the scroll event rather than through
+    // requestAnimationFrame. An rAF gate needs a "already queued" flag, and if
+    // rAF never fires - which happens when the page is hidden or has no laid-out
+    // height - that flag stays raised and the bar freezes for good. One style
+    // write per scroll event is cheap enough that the guard is not worth the
+    // failure mode.
+    function paint() {
+      var doc = document.documentElement;
+      var viewport = window.innerHeight || doc.clientHeight || 0;
+      var scrollable = doc.scrollHeight - viewport;
+      var y = window.scrollY || doc.scrollTop || 0;
+      var pct = scrollable > 40 ? (y / scrollable) * 100 : 0;
+      bar.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    }
+    window.addEventListener("scroll", paint, { passive: true });
+    window.addEventListener("resize", paint, { passive: true });
+    paint();
+  });
+
   var m = location.pathname.match(/lesson-(\d)\.html$/);
   var here = m ? m[1] : null;
   if (!here) return;

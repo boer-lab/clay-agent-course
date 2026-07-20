@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 6 — What else this shape can do · Using Clay in Claude Code</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<nav class="top-nav"><div class="top-nav-inner"><a class="brand" href="index.html">Using Clay in Claude Code</a><div class="nav-pills" aria-label="Lessons"><a class="nav-pill" data-lesson="0" href="lesson-0.html" title="Lesson 0">0</a><a class="nav-pill" data-lesson="1" href="lesson-1.html" title="Lesson 1">1</a><a class="nav-pill" data-lesson="2" href="lesson-2.html" title="Lesson 2">2</a><a class="nav-pill" data-lesson="3" href="lesson-3.html" title="Lesson 3">3</a><a class="nav-pill" data-lesson="4" href="lesson-4.html" title="Lesson 4">4</a><a class="nav-pill" data-lesson="5" href="lesson-5.html" title="Lesson 5">5</a><a class="nav-pill pill-current" data-lesson="6" href="lesson-6.html" title="Lesson 6" aria-current="page">6</a><a class="nav-pill nav-pill-text" href="gift.html">Take with you</a></div></div></nav>
+<main class="lesson">
+<header class="lesson-header">
+<p class="lesson-badges"><span class="badge badge-num">Lesson 6</span> <span class="badge badge-time">5 min</span></p>
+<h1>Lesson 6 — What else this shape can do</h1>
+</header>
+<article class="lesson-body">
+<h2>What this gets you</h2>
+<p>Nothing to build here. You are done building.</p>
+<p>This is the lesson that tells you where the ceiling actually is, because the thing you made is deliberately the smallest version worth having: you press Run, it asks one question about one company. The same shape goes a long way further, and it would be a shame to finish this course thinking that was all of it.</p>
+<p>I am naming these, not teaching them. Each one is the move you already know — say what you want in a sentence, then check what came back.</p>
+<h2>Where it goes from here</h2>
+<p><strong>It does not have to be you pressing Run.</strong> A workflow can also start:</p>
+<ul>
+<li>on a schedule you set</li>
+<li>when something calls it over the web, which is a webhook</li>
+<li>when someone new is added to a saved list of people in Clay, which Clay calls an audience</li>
+<li>when a spreadsheet file is uploaded, the kind that ends in .csv</li>
+</ul>
+<p>One catch worth knowing before you reach for the schedule: a plain scheduled run starts with nothing in its hands. If your workflow expects a company website, it has to get that from somewhere, which is why the saved-list version below is the one that actually works.</p>
+<p><strong>A workflow can hold more than two steps.</strong> It can split down different paths depending on what an answer comes back as, and it can run code. One thing to know if you go adding steps: a second AI researcher step will not give you a second question. The two share one, so both end up asking whichever was set last. When you want a second fact, reach for a ready-made step instead.</p>
+<p><strong>The AI researcher is not your only option.</strong> Clay keeps nineteen steps already built, each made to go get one specific thing. Clay calls these enrichments, and you ask for them by name:</p>
+<ul>
+<li>Enrich Company</li>
+<li>Company News</li>
+<li>Company Job Openings</li>
+<li>Website Technology Stack</li>
+<li>Find People at Company</li>
+<li>Work Email</li>
+</ul>
+<p>A named enrichment is cheaper than asking the researcher to go find the same thing, and it comes back the same way every time. The full list is on the cheatsheet that comes with this course.</p>
+<h2>What it looks like put together</h2>
+<p>Imagine part of your job is keeping the sales team's account list current. Every Monday you would otherwise open twenty tabs, work out which of your accounts have started hiring, and type what you found somewhere the team will see it.</p>
+<p>Instead you describe that once, in the terminal:</p>
+<blockquote><p>Take my saved list of target accounts. Every Monday morning, look up each one's job openings, ask the researcher whether that hiring looks like they are moving into a new market, and put what it finds into our CRM against the right account.</p></blockquote>
+<p>Claude Code builds it. From then on it runs on Monday whether you are there or not, and the answers are waiting when you get in. You never opened Clay.</p>
+<p>Note the shape of that: the list already exists. The workflow does not go and find companies for you — it works through a list you keep. That is the piece people expect to be there and it is not.</p>
+<h2>Try it</h2>
+<p>There is nothing to build. Two things worth doing instead, and both take a minute.</p>
+<ol>
+<li>Ask Claude Code what it would take:
+<blockquote><p>What would it take to run my Company Research workflow on a schedule instead of me pressing Run?</p></blockquote>
+<p>Read the answer against this lesson. You are not building it — you are seeing whether you can follow the shape of the answer now. A month ago you could not have.</p></li>
+<li>Take the cheatsheet. It is on the page linked at the top of this course, and it is written for
+<p>Claude Code to read rather than for you. Drop it in your project folder and your agent starts knowing what took me a week to find out.</p></li>
+</ol>
+<h2>Check yourself</h2>
+<div class="quiz-section" id="quiz-root" data-lesson="6"><noscript><p class="quiz-noscript">These questions need JavaScript to run. Nothing is scored, so if it is switched off you can safely read on.</p></noscript></div>
+<h2>Fine print</h2>
+<details>
+<summary>The exact steps, dates, and limits</summary>
+<ul>
+<li>The trigger types, node types and enrichment names above were read from the live plugin on July 19, 2026, not from documentation. Nineteen Clay-managed enrichments were listed by <code>clay functions list</code>; the trigger types were created and removed against a real workflow to confirm they are accepted.</li>
+<li>"Contextless" is Clay's own word for what a plain scheduled run hands the workflow, which is why the working example is built on a saved list instead. A schedule pointed at an audience segment reruns every member of that segment, and that trigger was created and deleted live on July 19, 2026 to confirm it is accepted.</li>
+<li>Sending results to a CRM is real: HubSpot, Salesforce, Attio and Pipedrive actions are all in the plugin's catalogue. This course does not walk through connecting one.</li>
+<li>A second AI researcher step sharing the first one's question was verified live on July 19, 2026: adding a new research step to an existing workflow silently rewrote the first step's question, while both steps kept their own names.</li>
+<li>Clay's Agent Plugin is in open beta and Workflows are at an earlier alpha stage and actively changing (Clay docs: clay-api-cli, checked Jul 18, 2026).</li>
+</ul>
+</details>
+</article>
+<nav class="lesson-nav"><a class="nav-prev" href="lesson-5.html">&larr; Lesson 5</a><a class="nav-next" href="gift.html">Take with you &rarr;</a></nav>
+<footer class="site-footer">
+<p class="banner">Every Clay fact here was run live on a real Clay account on July 19, 2026. Clay ships weekly — check the current docs before relying on any limit.</p>
+<div class="feedback">
+<a class="feedback-link" href="https://forms.gle/tWV7KC5qhFK3eYji7" target="_blank" rel="noopener">Suggest a fix or tell me what broke &rarr;</a>
+</div>
+<div class="feedback feedback-survey">
+<a class="survey-link" href="https://forms.gle/2iZnLKvbZJThkieP9" target="_blank" rel="noopener">Finished the course? Tell me how it went &rarr;</a>
+</div>
+<p><a href="colophon.html">How this course was built</a> &middot; <a href="index.html">Course home</a></p>
+</footer>
+</main><script type="application/json" id="quiz-data">{"lesson": 6, "items": [{"q": "You want your workflow to run itself every Monday against your account list. Which part does the work of knowing which companies to run?", "options": [{"text": "The schedule. You tell it Monday and it goes and finds the companies.", "correct": false, "why": "A schedule only decides when. A plain scheduled run starts with nothing in its hands, so a workflow that expects a company website would fire with none. The list has to come from somewhere."}, {"text": "A saved list in Clay that the schedule reruns.", "correct": true, "why": "That is why the Monday-morning example starts with \"take my saved list.\" The list is the context. The schedule just decides when to walk it."}, {"text": "The AI researcher works out which companies you meant.", "correct": false, "why": "The researcher answers a question about a company you hand it. Choosing which companies to hand it is a different job, and that is what the saved list is for."}]}, {"q": "You want two facts about each company instead of one. What is the move?", "options": [{"text": "Add a second AI researcher step with the second question.", "correct": false, "why": "This is the one that catches people. Two researcher steps share a single question, so both end up asking whichever was set last, and you pay twice for one answer."}, {"text": "Add one of the ready-made enrichments for the second fact.", "correct": true, "why": "A named step like Company News or Work Email has its own settings, costs less than asking the researcher to go hunting, and returns the same shape every time."}, {"text": "Build a second workflow and run both.", "correct": false, "why": "It would work, and it is more moving parts than you need. A second step in the workflow you already have is simpler, and a ready-made one is cheaper than a second researcher."}]}, {"q": "What is the honest reason this course taught workflows rather than starting where most Clay guides start?", "options": [{"text": "Workflows are the best place for a beginner to start in Clay.", "correct": false, "why": "Most people who know Clay would point a beginner at the spreadsheet first, and they would be right. Workflows are what this particular route can build."}, {"text": "It is what the Clay Agent Plugin can build today, and the course is really about talking to Claude Code.", "correct": true, "why": "The workflow was the thing you built while learning the actual skill. The plugin is in open beta and will do more later; the asking is the part that transfers."}, {"text": "Workflows are the only useful thing in Clay.", "correct": false, "why": "Not close. Clay's spreadsheet side is where most of the work happens for most people, and this route simply does not reach it yet."}]}]}</script>
+<script src="quiz.js"></script>
+<script src="interactions.js"></script>
+</body>
+</html>

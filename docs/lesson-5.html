@@ -7,10 +7,10 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="">
-<nav class="top-nav"><div class="top-nav-inner"><a class="brand" href="index.html">Using Clay in Claude Code</a><div class="nav-pills" aria-label="Lessons"><a class="nav-pill" data-lesson="0" href="lesson-0.html" title="Lesson 0">0</a><a class="nav-pill" data-lesson="1" href="lesson-1.html" title="Lesson 1">1</a><a class="nav-pill" data-lesson="2" href="lesson-2.html" title="Lesson 2">2</a><a class="nav-pill" data-lesson="3" href="lesson-3.html" title="Lesson 3">3</a><a class="nav-pill" data-lesson="4" href="lesson-4.html" title="Lesson 4">4</a><a class="nav-pill pill-current" data-lesson="5" href="lesson-5.html" title="Lesson 5" aria-current="page">5</a><a class="nav-pill nav-pill-text" href="gift.html">Take with you</a></div></div></nav>
+<nav class="top-nav"><div class="top-nav-inner"><a class="brand" href="index.html">Using Clay in Claude Code</a><div class="nav-pills" aria-label="Lessons"><a class="nav-pill" data-lesson="0" href="lesson-0.html" title="Lesson 0">0</a><a class="nav-pill" data-lesson="1" href="lesson-1.html" title="Lesson 1">1</a><a class="nav-pill" data-lesson="2" href="lesson-2.html" title="Lesson 2">2</a><a class="nav-pill" data-lesson="3" href="lesson-3.html" title="Lesson 3">3</a><a class="nav-pill" data-lesson="4" href="lesson-4.html" title="Lesson 4">4</a><a class="nav-pill pill-current" data-lesson="5" href="lesson-5.html" title="Lesson 5" aria-current="page">5</a><a class="nav-pill" data-lesson="6" href="lesson-6.html" title="Lesson 6">6</a><a class="nav-pill nav-pill-text" href="gift.html">Take with you</a></div></div></nav>
 <main class="lesson">
 <header class="lesson-header">
-<p class="lesson-badges"><span class="badge badge-num">Lesson 5</span> <span class="badge badge-time">9 min</span></p>
+<p class="lesson-badges"><span class="badge badge-num">Lesson 5</span> <span class="badge badge-time">6 min</span></p>
 <h1>Lesson 5 — Make it yours</h1>
 </header>
 <article class="lesson-body">
@@ -37,7 +37,6 @@ Sources      aflac.com, then a web search for Aflac&#x27;s business model</code>
 <p>The workflow does one job well: asking the same public-web question about company after company, and keeping the sources for each answer. That is enough for real work. Ten companies on a list, and you need to know which of them sell to hospitals. You hand the list over and it runs them one after another. Feeding a list in automatically is a next step, and this course does not cover it.</p>
 <h2>Try it</h2>
 <p>Pick a question you actually want answered, the kind you would otherwise open ten tabs to figure out.</p>
-<p>If the new one turns out worse, ask for the industry question back and you are where you started. Credits are not cash, and a retry costs a few of them.</p>
 <ol>
 <li>Tell Claude Code the new question, in one plain sentence: <em>"In my Company Research workflow, change the question the research step asks. Instead of the industry, ask [your question]. Then run it on stripe.com and show me the answer."</em></li>
 <li>Read the answer, then read the reasoning underneath it. Start on stripe.com because you already saw what that company came back as, so you are the one who can catch a wrong answer.</li>
@@ -47,35 +46,8 @@ Sources      aflac.com, then a web search for Aflac&#x27;s business model</code>
 <p>A run is a few credits, so if the first version comes back mushy, sharpen the question and go again.</p>
 <h2>Check yourself</h2>
 <div class="quiz-section" id="quiz-root" data-lesson="5"><noscript><p class="quiz-noscript">These questions need JavaScript to run. Nothing is scored, so if it is switched off you can safely read on.</p></noscript></div>
-<p><strong>One page to take with you.</strong> Every sentence this course had you say to Claude Code is on a single page, so you are not digging back through the lessons to find the wording. It comes with the course, along with a cheatsheet written for Claude Code itself to read.</p>
-<p><strong>What else this thing does.</strong> You built the smallest version of this that is worth having: you press Run, it asks one question about one company. The same shape goes a good deal further, and this course does not teach any of it. I am naming it so you know the ceiling is not where you left it.</p>
-<p>Start with how a workflow starts. It does not have to be you pressing Run. It can also start:</p>
-<ul>
-<li>on a schedule you set</li>
-<li>when something calls it over the web, which is a webhook</li>
-<li>when someone new is added to a saved list of people in Clay, which Clay calls an audience</li>
-<li>when a spreadsheet file is uploaded, the kind that ends in .csv</li>
-</ul>
-<p>A workflow can also hold more steps, split down different paths depending on what an answer comes back as, and run code. One thing to know if you go adding steps: a second AI researcher step will not give you a second question. The two share one, so both end up asking whichever was set last. When you want a second fact, reach for a ready-made step instead.</p>
-<p>And the AI researcher is not your only option for filling in a fact about a company. Clay keeps nineteen steps already built, each one made to go get a single specific thing. Clay calls these enrichments, and you ask for them by name. Useful ones to know about:</p>
-<ul>
-<li>Enrich Company</li>
-<li>Company News</li>
-<li>Company Job Openings</li>
-<li>Website Technology Stack</li>
-<li>Find People at Company</li>
-<li>Work Email</li>
-</ul>
-<p>A named enrichment is cheaper than asking the researcher to go find the same thing, and it comes back the same way every time. The full list of nineteen is on the cheatsheet that comes with this course.</p>
-<p>None of that is a new skill. Each one is the same move you already made: say what you want in a sentence and check what came back.</p>
-<p>Put the pieces together and it looks like this.</p>
-<p>Imagine part of your job is keeping the sales team's account list current. Every Monday you would otherwise open twenty tabs and work out which of your accounts have started hiring, then type what you found somewhere the team will see it.</p>
-<p>Instead you describe that once, in the terminal. Take my saved list of target accounts. Every Monday morning, look up each one's job openings, ask the researcher whether that hiring looks like they are moving into a new market, and put what it finds into our CRM against the right account.</p>
-<p>Claude Code builds it. From then on it runs on Monday whether you are there or not, and the answers are waiting when you get in. You never opened Clay.</p>
-<p>That is the whole idea this course was pointing at. You are not learning a tool. You are learning to say what you want to something that can go and do it.</p>
-<p>What you built is small. One workflow and a handful of runs.</p>
-<p>The way in is a sentence. Most people who are nervous about this never find that out, because they decide early that it belongs to engineers and go read about it instead of opening it.</p>
-<p>The question sitting in your research step will probably be the wrong question a month from now. That is fine, and it is the point. Open Claude Code, tell it what you want to ask instead, and run it again.</p>
+<p>That is the lesson. The workflow is yours, it asks your question, and it will keep answering it for as long as you want to run it.</p>
+<p>Lesson 6 is shorter and hands-off: what else this same shape can do, so you know where the ceiling actually is.</p>
 <h2>Fine print</h2>
 <details>
 <summary>The exact steps, dates, and limits</summary>
@@ -90,14 +62,11 @@ Sources      aflac.com, then a web search for Aflac&#x27;s business model</code>
 </ul>
 </details>
 </article>
-<nav class="lesson-nav"><a class="nav-prev" href="lesson-4.html">&larr; Lesson 4</a><a class="nav-next" href="gift.html">Take with you &rarr;</a></nav>
+<nav class="lesson-nav"><a class="nav-prev" href="lesson-4.html">&larr; Lesson 4</a><a class="nav-next" href="lesson-6.html">Lesson 6 &rarr;</a></nav>
 <footer class="site-footer">
 <p class="banner">Every Clay fact here was run live on a real Clay account on July 19, 2026. Clay ships weekly — check the current docs before relying on any limit.</p>
 <div class="feedback">
 <a class="feedback-link" href="https://forms.gle/tWV7KC5qhFK3eYji7" target="_blank" rel="noopener">Suggest a fix or tell me what broke &rarr;</a>
-</div>
-<div class="feedback feedback-survey">
-<a class="survey-link" href="https://forms.gle/2iZnLKvbZJThkieP9" target="_blank" rel="noopener">Finished the course? Tell me how it went &rarr;</a>
 </div>
 <p><a href="colophon.html">How this course was built</a> &middot; <a href="index.html">Course home</a></p>
 </footer>

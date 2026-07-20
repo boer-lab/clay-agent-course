@@ -43,8 +43,6 @@ You are going to do the same thing, with a kind of company you pick. You are don
 
 A search only reads, so nothing you type here changes anything in your Clay account. It does draw on a monthly allowance of search results, though, and that allowance is easier to use up than you would expect. Aim once rather than firing off ten rough attempts.
 
-If what comes back is an error naming how many results you have used and a date it resets, that is the monthly allowance gone, and nothing is broken. Running out announces itself as an error rather than a quiet empty list, the count resets next month, and you can do the rest of the course without it by using geico.com and zurichna.com wherever a later lesson asks you for a company.
-
 Fill in the blanks:
 
 > Find me \_\_\_\_\_\_ companies in \_\_\_\_\_\_ with at least \_\_\_\_\_\_ employees.

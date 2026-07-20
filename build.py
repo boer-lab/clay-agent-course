@@ -34,7 +34,7 @@ ASSETS = REPO / "assets"
 # pages, which made "never edit docs/" untrue and easy to trip over. They are
 # source now, and get copied into docs/ on every build.
 STATIC = REPO / "static"
-N_LESSONS = 6
+N_LESSONS = 7
 
 SITE_TITLE = "Using Clay in Claude Code"
 TAGLINE = ("Clay is a smart spreadsheet that finds companies and people and fills in facts "

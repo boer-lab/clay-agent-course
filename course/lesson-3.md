@@ -8,8 +8,6 @@ By now you can ask Claude Code to find companies. Finding them is nice. The real
 
 You can build something. In this lesson you build a small Clay workflow — a saved set of steps that takes a company and hands back a real answer about it — and you run it. When you finish, there is a thing in your Clay account that you made, that works, that you can run again tomorrow. That is the moment the fear goes away.
 
-One honest word first. The tool you are using — Clay's Agent Plugin — is new and in beta.
-
 ## The whole build, start to finish
 
 A workflow is just a set of steps with a start and an end. Yours will have two: a **start** (you hand it a company website) and a **research step** (it looks the company up and tells you what it does).
