@@ -9,7 +9,7 @@ This one is written for Claude Code to read, not you. It is every command that e
 claygent's output comes back in, the nineteen ready-made enrichments you can call by name, and the
 handful of mistakes that cost me hours. The wrong filter field that returns an empty list instead of
 an error. The command that needs two ids and complains about the wrong one. The research question
-that lives in a shared setting rather than inside your workflow.
+that two research steps end up sharing.
 
 **How to use it:** download it, then either paste the whole thing into Claude Code at the start of a
 session, or save it in your project folder as `CLAUDE.md`, which is the file Claude Code reads

@@ -579,8 +579,7 @@ def build_index(titles, times):
         if m:
             mins += int(m.group(1))
     total = (f'<p class="total-time">Six lessons, about {mins} minutes of reading. '
-             f'Setting up Claude Code and Clay for the first time is on top of that, '
-             f'and I have not timed it — give your first sitting an evening.</p>'
+             f'Setting up Claude Code and Clay for the first time is on top of that.</p>'
              if mins else "")
     gift_html = ""
     if (COURSE / GIFT_PAGE).is_file():
